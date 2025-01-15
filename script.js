@@ -24,7 +24,7 @@ function loadGradesAndSubjects() {
       console.log('Parsed Excel data:', jsonData); // Debugging output
 
       // Process data to group subjects by grade and store corresponding contents
-      const gradeData = {};
+     // const gradeData = {};
       jsonData.forEach(row => {
        
         const grade = row['Grade'];
@@ -100,7 +100,7 @@ function displayContents(subject, grade) {
   console.log("grade: "+ grade);
   console.log("subject: "+ subject);
    console.log("gradeData 2: "+ gradeData);
-  console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+  console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
   const jsonData = JSON.stringify(gradeData, null, 2);
          console.log("Grade Data  333333333333333333333:", jsonData); 
   const contents = gradeData[1]['English'];

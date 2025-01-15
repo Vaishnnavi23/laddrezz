@@ -25,6 +25,7 @@ function loadGradesAndSubjects() {
       // Process data to group subjects by grade and store corresponding contents
       const gradeData = {};
       jsonData.forEach(row => {
+        console.log(' row :', row);
         const grade = row['Grade'];
         const subject = row['Subjects'];
         const contents = row['Con'];

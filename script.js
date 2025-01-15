@@ -83,7 +83,7 @@ function loadGradesAndSubjects() {
 function displayContents(subject, grade) {
   const contentsContainer = document.getElementById('contentsContainer');
   contentsContainer.innerHTML = ''; // Clear previous contents
- console.log("gradeData 1: "+ gradeData[grade][subject]);
+  //console.log("gradeData 1: "+ gradeData[grade][subject]);
   const gradeData = {}; // Assuming the gradeData object is available
    console.log("gradeData 2: "+ gradeData[grade][subject]);
   const contents = gradeData[grade][subject];

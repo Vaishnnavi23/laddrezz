@@ -37,7 +37,7 @@ function loadGradesAndSubjects() {
         console.log(' Sub :', subject);
         console.log(' contents :', contents);
         gradeData[grade][subject] = contents.split(","); // Split contents by commas
-        console.log("gradeData[grade][subject] : "+ gradeData[1][English]);
+        console.log("gradeData[grade][subject] : "+ gradeData[1]['English']);
         console.log("gradeData : "+ gradeData);
       });
 

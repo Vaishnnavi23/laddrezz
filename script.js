@@ -37,7 +37,7 @@ function loadGradesAndSubjects() {
         console.log(' Sub :', subject);
         console.log(' contents :', contents);
         gradeData[grade][subject] = contents.split(","); // Split contents by commas
-        console.log("gradeDAta"+ gradeData[grade][subject]);
+        console.log("gradeData : "+ gradeData[grade][subject]);
       });
 
       console.log('Processed Grade Data:', gradeData); // Debugging output
@@ -83,8 +83,9 @@ function loadGradesAndSubjects() {
 function displayContents(subject, grade) {
   const contentsContainer = document.getElementById('contentsContainer');
   contentsContainer.innerHTML = ''; // Clear previous contents
-
+ console.log("gradeData 1: "+ gradeData[grade][subject]);
   const gradeData = {}; // Assuming the gradeData object is available
+   console.log("gradeData 2: "+ gradeData[grade][subject]);
   const contents = gradeData[grade][subject];
 
   contents.forEach(content => {

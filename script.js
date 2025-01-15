@@ -1,4 +1,5 @@
 // Fetch and process the Excel file
+let gradeData = {}; 
 function loadGradesAndSubjects() {
   const filePath = './MasterFile.xlsx'; // Path to your Excel file
   const gradesDropdown = document.getElementById('gradesDropdown');
@@ -85,7 +86,7 @@ function displayContents(subject, grade) {
   const contentsContainer = document.getElementById('contentsContainer');
   contentsContainer.innerHTML = ''; // Clear previous contents
   //console.log("gradeData 1: "+ gradeData[grade][subject]);
-  const gradeData = {}; // Assuming the gradeData object is available
+//  const gradeData = {}; // Assuming the gradeData object is available
   console.log("grade: "+ grade);
   console.log("subject: "+ subject);
    console.log("gradeData 2: "+ gradeData);

@@ -90,8 +90,8 @@ function displayContents(subject, grade) {
   console.log("subject: "+ subject);
    console.log("gradeData 2: "+ gradeData);
   
-  const contents = gradeData[grade][subject];
-
+  const contents = gradeData[1]['English'];
+   console.log("contents : "+ contents);
   contents.forEach(content => {
     const button = document.createElement('button');
     button.textContent = content.trim(); // Trim to remove extra spaces

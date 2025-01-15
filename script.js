@@ -85,7 +85,10 @@ function displayContents(subject, grade) {
   contentsContainer.innerHTML = ''; // Clear previous contents
   //console.log("gradeData 1: "+ gradeData[grade][subject]);
   const gradeData = {}; // Assuming the gradeData object is available
+  console.log("grade: "+ grade);
+  console.log("subject: "+ subject);
    console.log("gradeData 2: "+ gradeData[grade][subject]);
+  
   const contents = gradeData[grade][subject];
 
   contents.forEach(content => {

@@ -6,32 +6,16 @@
   <title>Grades and Subjects</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
   <script src="script.js" defer></script>
-  <style>
-    #subjects, #contents {
-      margin: 10px 0;
-    }
-    button {
-      margin: 5px;
-      padding: 10px;
-      font-size: 16px;
-    }
-  </style>
 </head>
 <body>
-  <h1>Select Grade and Subject</h1>
+  <h1>Select Grade</h1>
   <label for="gradesDropdown">Select Grade:</label>
   <select id="gradesDropdown">
     <option value="">Loading...</option>
   </select>
 
-  <div id="subjects">
-    <h2>Subjects:</h2>
-    <div id="subjectButtons"></div>
-  </div>
-
-  <div id="contents">
-    <h2>Contents:</h2>
-    <div id="contentButtons"></div>
+  <div id="subjectsContainer" style="margin-top: 20px; font-size: 18px; font-weight: bold;">
+    <!-- Subjects will be displayed here -->
   </div>
 </body>
 </html>

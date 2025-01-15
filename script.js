@@ -27,7 +27,8 @@ function loadGradesAndSubjects() {
       jsonData.forEach(row => {
         const grade = row['Grade'];
         const subject = row['Subjects'];
-        const contents = row['Contents'];
+        const contents = row['Contents
+'];
 
         if (!gradeData[grade]) {
           gradeData[grade] = {};

@@ -25,7 +25,10 @@ function loadGradesAndSubjects() {
       const gradeData = {};
       jsonData.forEach(row => {
         const grade = row['Grade'];
+        alert(grade);
+        
         const subject = row['Subjects'];
+        alert(subject);
 
         if (!gradeData[grade]) {
           gradeData[grade] = new Set(); // Use a Set to avoid duplicates

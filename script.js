@@ -89,7 +89,7 @@ function displayContents(subject, grade) {
   console.log("grade: "+ grade);
   console.log("subject: "+ subject);
    console.log("gradeData 2: "+ gradeData);
-  
+  console.log("**************************************");
   const contents = gradeData[1]['English'];
    console.log("contents : "+ contents);
   contents.forEach(content => {

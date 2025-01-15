@@ -38,6 +38,7 @@ function loadGradesAndSubjects() {
         console.log(' Sub :', subject);
         console.log(' contents :', contents);
         gradeData[grade][subject] = contents.split(","); // Split contents by commas
+        console.log("Grade Data  11111111111111111111111111:", JSON.stringify(gradeData, null, 2)); 
         console.log("gradeData[grade][subject] : "+ gradeData[1]['English']);
         console.log("gradeData : "+ gradeData);
       });

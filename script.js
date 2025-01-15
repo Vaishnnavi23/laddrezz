@@ -1,6 +1,6 @@
 // Fetch and process the Excel file
 function loadGradesAndSubjects() {
-  const filePath = './grades.xlsx'; // Path to your Excel file
+  const filePath = './MasterFile.xlsx'; // Path to your Excel file
   const gradesDropdown = document.getElementById('gradesDropdown');
   const subjectsContainer = document.getElementById('subjectsContainer'); // Div to display subjects
 
@@ -25,10 +25,10 @@ function loadGradesAndSubjects() {
       const gradeData = {};
       jsonData.forEach(row => {
         const grade = row['Grade'];
-        alert(grade);
+       
         
         const subject = row['Subjects'];
-        alert(subject);
+      
 
         if (!gradeData[grade]) {
           gradeData[grade] = new Set(); // Use a Set to avoid duplicates

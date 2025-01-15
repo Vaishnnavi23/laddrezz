@@ -2,8 +2,7 @@
 function loadGradesAndSubjects() {
   const filePath = './grades.xlsx'; // Path to your Excel file
   const gradesDropdown = document.getElementById('gradesDropdown');
-  const subjectButtonsContainer = document.getElementById('subjectButtons');
-  const contentButtonsContainer = document.getElementById('contentButtons');
+  const subjectsContainer = document.getElementById('subjectsContainer'); // Div to display subjects
 
   // Fetch the Excel file
   fetch(filePath)
@@ -22,17 +21,16 @@ function loadGradesAndSubjects() {
 
       console.log('Parsed Excel data:', jsonData); // Debugging output
 
-      // Process data to group subjects and contents by grade
+      // Process data to group subjects by grade
       const gradeData = {};
       jsonData.forEach(row => {
         const grade = row['Grade'];
         const subject = row['Subjects'];
-        const content = row['Contents'];
 
         if (!gradeData[grade]) {
-          gradeData[grade] = [];
+          gradeData[grade] = new Set(); // Use a Set to avoid duplicates
         }
-        gradeData[grade].push({ subject, content });
+        gradeData[grade].add(subject);
       });
 
       console.log('Processed Grade Data:', gradeData); // Debugging output
@@ -50,29 +48,16 @@ function loadGradesAndSubjects() {
       // Handle grade selection
       gradesDropdown.addEventListener('change', () => {
         const selectedGrade = gradesDropdown.value;
-        subjectButtonsContainer.innerHTML = '';
-        contentButtonsContainer.innerHTML = '';
+        subjectsContainer.innerHTML = ''; // Clear previous subjects
 
         console.log(`Selected Grade: ${selectedGrade}`); // Debugging output
 
         if (selectedGrade && gradeData[selectedGrade]) {
-          // Create buttons for subjects
-          gradeData[selectedGrade].forEach(({ subject, content }) => {
-            const button = document.createElement('button');
-            button.textContent = subject;
-            button.addEventListener('click', () => {
-              // Display contents as buttons
-              contentButtonsContainer.innerHTML = '';
-              const contents = content.split(',');
-              contents.forEach(contentItem => {
-                const contentButton = document.createElement('button');
-                contentButton.textContent = contentItem.trim();
-                contentButtonsContainer.appendChild(contentButton);
-              });
-              console.log(`Selected Subject: ${subject}, Contents: ${content}`); // Debugging output
-            });
-            subjectButtonsContainer.appendChild(button);
-          });
+          // Display subjects for the selected grade
+          const subjects = Array.from(gradeData[selectedGrade]).join(', ');
+          subjectsContainer.textContent = `Subjects: ${subjects}`;
+        } else {
+          subjectsContainer.textContent = ''; // Clear if no grade is selected
         }
       });
     })

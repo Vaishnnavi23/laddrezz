@@ -5,13 +5,22 @@ function loadGradesAndSubjects() {
   const subjectButtonsContainer = document.getElementById('subjectButtons');
   const contentButtonsContainer = document.getElementById('contentButtons');
 
+  // Fetch the Excel file
   fetch(filePath)
-    .then(response => response.arrayBuffer())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.arrayBuffer();
+    })
     .then(data => {
+      // Parse the Excel file
       const workbook = XLSX.read(data, { type: 'array' });
       const sheetName = workbook.SheetNames[0]; // Use the first sheet
       const worksheet = workbook.Sheets[sheetName];
       const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+      console.log('Parsed Excel data:', jsonData); // Debugging output
 
       // Process data to group subjects and contents by grade
       const gradeData = {};
@@ -25,6 +34,8 @@ function loadGradesAndSubjects() {
         }
         gradeData[grade].push({ subject, content });
       });
+
+      console.log('Processed Grade Data:', gradeData); // Debugging output
 
       // Populate the grades dropdown
       const grades = Object.keys(gradeData);
@@ -42,6 +53,8 @@ function loadGradesAndSubjects() {
         subjectButtonsContainer.innerHTML = '';
         contentButtonsContainer.innerHTML = '';
 
+        console.log(`Selected Grade: ${selectedGrade}`); // Debugging output
+
         if (selectedGrade && gradeData[selectedGrade]) {
           // Create buttons for subjects
           gradeData[selectedGrade].forEach(({ subject, content }) => {
@@ -53,9 +66,10 @@ function loadGradesAndSubjects() {
               const contents = content.split(',');
               contents.forEach(contentItem => {
                 const contentButton = document.createElement('button');
-                contentButton.textContent = contentItem;
+                contentButton.textContent = contentItem.trim();
                 contentButtonsContainer.appendChild(contentButton);
               });
+              console.log(`Selected Subject: ${subject}, Contents: ${content}`); // Debugging output
             });
             subjectButtonsContainer.appendChild(button);
           });

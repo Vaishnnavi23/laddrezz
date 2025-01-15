@@ -3,6 +3,7 @@ function loadGradesAndSubjects() {
   const filePath = './MasterFile.xlsx'; // Path to your Excel file
   const gradesDropdown = document.getElementById('gradesDropdown');
   const subjectsContainer = document.getElementById('subjectsContainer'); // Div to display subjects
+  const contentsContainer = document.getElementById('contentsContainer'); // Div to display contents
 
   // Fetch the Excel file
   fetch(filePath)
@@ -21,19 +22,17 @@ function loadGradesAndSubjects() {
 
       console.log('Parsed Excel data:', jsonData); // Debugging output
 
-      // Process data to group subjects by grade
+      // Process data to group subjects by grade and store corresponding contents
       const gradeData = {};
       jsonData.forEach(row => {
         const grade = row['Grade'];
-       
-        
         const subject = row['Subjects'];
-      
+        const contents = row['Contents'];
 
         if (!gradeData[grade]) {
-          gradeData[grade] = new Set(); // Use a Set to avoid duplicates
+          gradeData[grade] = {};
         }
-        gradeData[grade].add(subject);
+        gradeData[grade][subject] = contents.split(','); // Split contents by commas into an array
       });
 
       console.log('Processed Grade Data:', gradeData); // Debugging output
@@ -52,13 +51,19 @@ function loadGradesAndSubjects() {
       gradesDropdown.addEventListener('change', () => {
         const selectedGrade = gradesDropdown.value;
         subjectsContainer.innerHTML = ''; // Clear previous subjects
+        contentsContainer.innerHTML = ''; // Clear previous contents
 
         console.log(`Selected Grade: ${selectedGrade}`); // Debugging output
 
         if (selectedGrade && gradeData[selectedGrade]) {
-          // Display subjects for the selected grade
-          const subjects = Array.from(gradeData[selectedGrade]).join(', ');
-          subjectsContainer.textContent = `Subjects: ${subjects}`;
+          // Display subjects for the selected grade as buttons
+          const subjects = Object.keys(gradeData[selectedGrade]);
+          subjects.forEach(subject => {
+            const button = document.createElement('button');
+            button.textContent = subject;
+            button.onclick = () => displayContents(subject, selectedGrade);
+            subjectsContainer.appendChild(button);
+          });
         } else {
           subjectsContainer.textContent = ''; // Clear if no grade is selected
         }
@@ -67,6 +72,21 @@ function loadGradesAndSubjects() {
     .catch(error => {
       console.error('Error reading Excel file:', error);
     });
+}
+
+// Function to display contents when a subject button is clicked
+function displayContents(subject, grade) {
+  const contentsContainer = document.getElementById('contentsContainer');
+  contentsContainer.innerHTML = ''; // Clear previous contents
+
+  const gradeData = {}; // Assuming the gradeData object is available
+  const contents = gradeData[grade][subject];
+
+  contents.forEach(content => {
+    const button = document.createElement('button');
+    button.textContent = content.trim(); // Trim to remove extra spaces
+    contentsContainer.appendChild(button);
+  });
 }
 
 // Load the data on page load

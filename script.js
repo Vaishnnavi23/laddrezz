@@ -39,6 +39,14 @@ function loadGradesAndSubjects() {
         console.log(' contents :', contents);
         gradeData[grade][subject] = contents.split(","); // Split contents by commas
         console.log("Grade Data  11111111111111111111111111:", JSON.stringify(gradeData, null, 2)); 
+        const jsonData = JSON.stringify(gradeData, null, 2);
+        if (jsonData[grade] && jsonData[grade][subject]) {
+          console.log("VVVVVVVVVVVVVVVVVVVVVVV"); 
+    return jsonData[grade][subject];
+  } else {
+            console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"); 
+    return null; // Return null if grade or subject not found
+  }
         console.log("gradeData[grade][subject] : "+ gradeData[1]['English']);
         console.log("gradeData : "+ gradeData);
       });

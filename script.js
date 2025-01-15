@@ -1,36 +1,71 @@
-// Function to read the Excel file and populate the dropdown
-function populateDropdown() {
+// Fetch and process the Excel file
+function loadGradesAndSubjects() {
   const filePath = './grades.xlsx'; // Path to your Excel file
-  const dropdown = document.getElementById('gradesDropdown');
+  const gradesDropdown = document.getElementById('gradesDropdown');
+  const subjectButtonsContainer = document.getElementById('subjectButtons');
+  const contentButtonsContainer = document.getElementById('contentButtons');
 
   fetch(filePath)
     .then(response => response.arrayBuffer())
     .then(data => {
-      // Read the Excel file
       const workbook = XLSX.read(data, { type: 'array' });
       const sheetName = workbook.SheetNames[0]; // Use the first sheet
       const worksheet = workbook.Sheets[sheetName];
-      
-      // Convert sheet to JSON
       const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-      // Clear the dropdown and populate options
-      dropdown.innerHTML = '<option value="">Select a Grade</option>';
+      // Process data to group subjects and contents by grade
+      const gradeData = {};
       jsonData.forEach(row => {
-        const grade = row['Grade']; // Assuming the column name in Excel is "Grade"
-        if (grade) {
-          const option = document.createElement('option');
-          option.value = grade;
-          option.textContent = grade;
-          dropdown.appendChild(option);
+        const grade = row['Grade'];
+        const subject = row['Subjects'];
+        const content = row['Contents'];
+
+        if (!gradeData[grade]) {
+          gradeData[grade] = [];
+        }
+        gradeData[grade].push({ subject, content });
+      });
+
+      // Populate the grades dropdown
+      const grades = Object.keys(gradeData);
+      gradesDropdown.innerHTML = '<option value="">Select a Grade</option>';
+      grades.forEach(grade => {
+        const option = document.createElement('option');
+        option.value = grade;
+        option.textContent = `Grade ${grade}`;
+        gradesDropdown.appendChild(option);
+      });
+
+      // Handle grade selection
+      gradesDropdown.addEventListener('change', () => {
+        const selectedGrade = gradesDropdown.value;
+        subjectButtonsContainer.innerHTML = '';
+        contentButtonsContainer.innerHTML = '';
+
+        if (selectedGrade && gradeData[selectedGrade]) {
+          // Create buttons for subjects
+          gradeData[selectedGrade].forEach(({ subject, content }) => {
+            const button = document.createElement('button');
+            button.textContent = subject;
+            button.addEventListener('click', () => {
+              // Display contents as buttons
+              contentButtonsContainer.innerHTML = '';
+              const contents = content.split(',');
+              contents.forEach(contentItem => {
+                const contentButton = document.createElement('button');
+                contentButton.textContent = contentItem;
+                contentButtonsContainer.appendChild(contentButton);
+              });
+            });
+            subjectButtonsContainer.appendChild(button);
+          });
         }
       });
     })
     .catch(error => {
       console.error('Error reading Excel file:', error);
-      dropdown.innerHTML = '<option value="">Error loading grades</option>';
     });
 }
 
-// Call the function on page load
-document.addEventListener('DOMContentLoaded', populateDropdown);
+// Load the data on page load
+document.addEventListener('DOMContentLoaded', loadGradesAndSubjects);

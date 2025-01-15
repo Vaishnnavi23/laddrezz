@@ -32,7 +32,7 @@ function loadGradesAndSubjects() {
         if (!gradeData[grade]) {
           gradeData[grade] = {};
         }
-        gradeData[grade][subject] = contents.split(','); // Split contents by commas into an array
+        gradeData[grade][subject] = contents; // Split contents by commas into an array
       });
 
       console.log('Processed Grade Data:', gradeData); // Debugging output

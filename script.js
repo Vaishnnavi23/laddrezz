@@ -101,6 +101,8 @@ function displayContents(subject, grade) {
   console.log("subject: "+ subject);
    console.log("gradeData 2: "+ gradeData);
   console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+  const jsonData = JSON.stringify(gradeData, null, 2);
+         console.log("Grade Data  333333333333333333333:", jsonData); 
   const contents = gradeData[1]['English'];
    console.log("contents : "+ contents);
   contents.forEach(content => {

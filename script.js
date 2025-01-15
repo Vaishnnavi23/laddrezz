@@ -40,6 +40,7 @@ function loadGradesAndSubjects() {
         gradeData[grade][subject] = contents.split(","); // Split contents by commas
         console.log("Grade Data  11111111111111111111111111:", JSON.stringify(gradeData, null, 2)); 
         const jsonData = JSON.stringify(gradeData, null, 2);
+         console.log("Grade Data  2222222222222:", jsonData); 
         if (jsonData[grade] && jsonData[grade][subject]) {
           console.log("VVVVVVVVVVVVVVVVVVVVVVV"); 
     return jsonData[grade][subject];

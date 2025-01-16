@@ -124,8 +124,9 @@ function displayContents(subject, grade, lesson) {
 
   if (gradeData[grade][subject][lesson]) {
     const { quiz, worksheet, flashcard } = gradeData[grade][subject][lesson];
-
+    const resourceAvailable=0;
     if (quiz) {
+      resourceAvailable=1;
       const quizButton = document.createElement('button');
       quizButton.textContent = 'Quiz';
       console.log("quiz : "+quiz);
@@ -134,6 +135,7 @@ function displayContents(subject, grade, lesson) {
     }
 
     if (worksheet) {
+      resourceAvailable=1;
       const worksheetButton = document.createElement('button');
       worksheetButton.textContent = 'Worksheet';
       console.log("Worksheet  : "+worksheet);
@@ -142,10 +144,14 @@ function displayContents(subject, grade, lesson) {
     }
 
     if (flashcard) {
+      resourceAvailable=1
       const flashcardButton = document.createElement('button');
       flashcardButton.textContent = 'Flashcard';
       contentsContainer.appendChild(flashcardButton);
     }
+    if (resourceAvailable !=1)
+    {
+      contentsContainer.innerHTML="No Recources Available At This Moment"
   }
 }
 

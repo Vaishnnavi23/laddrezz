@@ -28,7 +28,7 @@ function loadGradesAndSubjects() {
         const quiz = row['Quiz'] || '';
         const worksheet = row['Worksheet'] || '';
         const flashcard = row['Flashcard'] || '';
-        console.log("grade added now:"+grade);
+        console.log("grade:"+grade + "subject :"+subject +"lesson :"+lesson + "quiz :"+quiz +"worksheet :"+worksheet);
         if (!gradeData[grade]) {
           gradeData[grade] = {};
         }

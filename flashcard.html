@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forest Flashcards</title>
+    <style>
+        body {
+             display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(to bottom, #56ab2f, #a8e063);
+    background-repeat: no-repeat; /* Prevent background repetition */
+    background-size: cover; /* Ensure the background covers the entire screen */
+    font-family: 'Arial', sans-serif;
+	background: url('https://4kwallpapers.com/images/walls/thumbs_3t/5696.jpg') no-repeat center center fixed;
+  background-size: cover;
+	
+    color: #fff;
+	height: 100%;
+        }
+		
+		html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+ 
+}
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .flashcard {
+		position: relative;
+		width: 100%;
+		max-width: 500px; /* Add a max-width to control the size */
+		height: 200px;
+		margin: 20px auto; /* Centers the flashcard horizontally */
+		perspective: 1000px;
+		display: flex; /* Ensures it's centered */
+		justify-content: center;
+		align-items: center;
+}
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .flashcard-front {
+            background-color: #387f188a;
+            color: white;
+        }
+
+        .flashcard-back {
+            background-color: #ffa500da;
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .question-counter {
+            margin-top: 10px;
+            font-size: 1rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        button:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Forest - Our Lifeline</h1>
+		<p> <h3>Grade : 7</h1>  <h3>Subject : Science</h1> </p>
+        <div class="flashcard">
+            <div class="flashcard-inner" id="flashcard-inner" onclick="toggleFlashcard()">
+                <div class="flashcard-front" id="flashcard-front">Forest has both _________ and ___________ factors.</div>
+                <div class="flashcard-back" id="flashcard-back">biotic and abiotic</div>
+            </div>
+        </div>
+       <div class="question-counter">
+            <span id="current-question">1</span> / <span id="total-questions">30</span>
+        </div>
+		
+        <div class="controls">
+            <button id="prev" onclick="prevCard()" disabled>Prev</button>
+            <button id="next" onclick="nextCard()">Next</button>
+        </div>
+		
+		 
+    </div>
+
+    <script>
+        const flashcards = [
+            { question: "Forest has both _________ and ___________ factors.", answer: "biotic and abiotic" },
+            { question: "Examples of biotic factors are __________.", answer: "plants, animals, and microorganisms" },
+			 { question: "Examples of non-biotic factors are ______________.", answer: "soil, water, and sunlight" },
+            { question: "Forest comes from the Latin word _______ which means ___________.", answer: "foris; land" },
+            { question: "The main product of the forest is ____________.", answer: "wood" },
+            { question: "Name 2 trees which give timber ____________.", answer: "teak, sal" },
+            { question: "Paper is manufactured from ____________.", answer: "wood" },
+            { question: "The main ingredient of paper is __________.", answer: "pulp" },
+            { question: "Resin is used to make ___________.", answer: "paint" },
+            { question: "Latex is used to make ___________.", answer: "rubber" },
+            { question: "___________ is used to make paint.", answer: "Resin" },
+            { question: "____________ is used to make rubber.", answer: "Latex" },
+            { question: "Due to deforestation ___________ increases in the atmosphere.", answer: "carbon dioxide" },
+            { question: "____________ is used in the treatment of malaria.", answer: "Chichona" },
+            { question: "__________ is obtained from coconut.", answer: "coir" },
+            { question: "Dense branches of tall trees that make the forest dark are called ________.", answer: "canopy" },
+            { question: "Forests are also called _________________.", answer: "green lungs" },
+            { question: "Microorganisms convert dead plants and animals to _________ .", answer: "humus" },
+            { question: "The organisms which help in maintaining the supply of nutrients to the plants are known as ______.", answer: "decomposers" },
+            { question: "A ___________ represents the feeding relationship among different organisms in the environment.", answer: "food chain" },
+            { question: "Number of food chains that exist together is called ____________.", answer: "food web" },
+            { question: "The mass-scale falling of trees is known as ________________.", answer: "deforestation" },
+            { question: "________________ is a natural farm management system that integrates agriculture and trees on farms.", answer: "agroforestry" },
+            { question: "_____________ involves the planting of trees in and around agricultural fields, along railway lines, roadsides, etc.", answer: "social forestry" },
+            { question: "____________ is a branch of tree that appears like a roof over the other plants.", answer: "canopy" },
+            { question: "__________ are the most characteristic component of a forest.", answer: "trees" },
+			{ question: "_____________ represents the relationship between eaten or being eaten.", answer: "food chain" },
+            { question: "Planting trees on a large scale is called ________________. ", answer: "afforestation" },
+            { question: "Forest covers _________ of the land surface of Earth.", answer: "1/3" },
+            { question: "Canopy makes the forest ___________.", answer: "dark" }
+           
+        ];
+
+        let currentIndex = 0;
+
+        function updateFlashcard() {
+            const question = flashcards[currentIndex].question;
+            const answer = flashcards[currentIndex].answer;
+            document.getElementById("flashcard-front").innerText = question;
+            document.getElementById("flashcard-back").innerText = answer;
+            document.getElementById("current-question").innerText = currentIndex + 1;
+            document.getElementById("prev").disabled = currentIndex === 0;
+            document.getElementById("next").disabled = currentIndex === flashcards.length - 1;
+
+            // Reset the card orientation when flipping between questions
+            document.getElementById("flashcard-inner").classList.remove("is-flipped");
+        }
+
+        function toggleFlashcard() {
+            const cardInner = document.getElementById("flashcard-inner");
+            cardInner.classList.toggle("is-flipped");
+        }
+
+        function nextCard() {
+            if (currentIndex < flashcards.length - 1) {
+                currentIndex++;
+                updateFlashcard();
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateFlashcard();
+            }
+        }
+
+
+        updateFlashcard();
+    </script>
+</body>
+</html>

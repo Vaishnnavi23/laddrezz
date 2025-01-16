@@ -1,9 +1,11 @@
 // Fetch and process the Excel file
 let gradeData = {}; 
+
 function loadGradesAndSubjects() {
   const filePath = './MasterFile.xlsx'; // Path to your Excel file
   const gradesDropdown = document.getElementById('gradesDropdown');
   const subjectsContainer = document.getElementById('subjectsContainer'); // Div to display subjects
+  const lessonsDropdown = document.getElementById('lessonsDropdown'); // Dropdown to display lessons
   const contentsContainer = document.getElementById('contentsContainer'); // Div to display contents
 
   // Fetch the Excel file
@@ -23,33 +25,22 @@ function loadGradesAndSubjects() {
 
       console.log('Parsed Excel data:', jsonData); // Debugging output
 
-      // Process data to group subjects by grade and store corresponding contents
+      // Process data to group lessons and contents by grade and subject
       jsonData.forEach(row => {
-       
         const grade = row['Grade'];
         const subject = row['Subjects'];
-		const lesson = row['Lesson'];
+        const lesson = row['Lesson'];
         const contents = row['Con'];
 
         if (!gradeData[grade]) {
           gradeData[grade] = {};
         }
-        console.log(' Grade :', grade);
-        console.log(' Sub :', subject);
-		console.log(' Lesson :', lesson);
-        console.log(' contents :', contents);
-        gradeData[grade][subject] = contents.split(","); // Split contents by commas
-        const jsonData = JSON.stringify(gradeData, null, 2);
-        console.log("jsonData at fetch file:", jsonData); 
-        if (jsonData[grade] && jsonData[grade][subject]) {
-    return jsonData[grade][subject];
-  } else {
-       
-    return null; // Return null if grade or subject not found
-  }
-        console.log("gradeData[grade][subject] : "+ gradeData[grade][subject]);
-		 console.log("gradeData[grade][subject][Lesson] : "+ gradeData[grade][subject][Lesson]);
-        console.log("gradeData : "+ gradeData);
+
+        if (!gradeData[grade][subject]) {
+          gradeData[grade][subject] = {};
+        }
+
+        gradeData[grade][subject][lesson] = contents.split(','); // Split contents by commas
       });
 
       console.log('Processed Grade Data:', gradeData); // Debugging output
@@ -68,9 +59,8 @@ function loadGradesAndSubjects() {
       gradesDropdown.addEventListener('change', () => {
         const selectedGrade = gradesDropdown.value;
         subjectsContainer.innerHTML = ''; // Clear previous subjects
+        lessonsDropdown.innerHTML = '<option value="">Select a Lesson</option>'; // Clear previous lessons
         contentsContainer.innerHTML = ''; // Clear previous contents
-
-        console.log(`Selected Grade: ${selectedGrade}`); // Debugging output
 
         if (selectedGrade && gradeData[selectedGrade]) {
           // Display subjects for the selected grade as buttons
@@ -78,11 +68,9 @@ function loadGradesAndSubjects() {
           subjects.forEach(subject => {
             const button = document.createElement('button');
             button.textContent = subject;
-            button.onclick = () => displayContents(subject, selectedGrade);
+            button.onclick = () => displayLessons(subject, selectedGrade);
             subjectsContainer.appendChild(button);
           });
-        } else {
-          subjectsContainer.textContent = ''; // Clear if no grade is selected
         }
       });
     })
@@ -91,19 +79,42 @@ function loadGradesAndSubjects() {
     });
 }
 
-// Function to display contents when a subject button is clicked
-function displayContents(subject, grade) {
+// Function to display lessons for a subject
+function displayLessons(subject, grade) {
+  const lessonsDropdown = document.getElementById('lessonsDropdown');
+  lessonsDropdown.innerHTML = '<option value="">Select a Lesson</option>'; // Clear previous lessons
   const contentsContainer = document.getElementById('contentsContainer');
   contentsContainer.innerHTML = ''; // Clear previous contents
-  const jsonData = JSON.stringify(gradeData, null, 2);
-  console.log("jsonData : ", jsonData); 
-  const contents = gradeData[1][subject];
-  console.log("contents : "+ contents);
-  contents.forEach(content => {
-    const button = document.createElement('button');
-    button.textContent = content.trim(); // Trim to remove extra spaces
-    contentsContainer.appendChild(button);
-  });
+
+  if (gradeData[grade][subject]) {
+    const lessons = Object.keys(gradeData[grade][subject]);
+    lessons.forEach(lesson => {
+      const option = document.createElement('option');
+      option.value = lesson;
+      option.textContent = lesson;
+      lessonsDropdown.appendChild(option);
+    });
+
+    lessonsDropdown.addEventListener('change', () => {
+      const selectedLesson = lessonsDropdown.value;
+      displayContents(subject, grade, selectedLesson);
+    });
+  }
+}
+
+// Function to display contents for a lesson
+function displayContents(subject, grade, lesson) {
+  const contentsContainer = document.getElementById('contentsContainer');
+  contentsContainer.innerHTML = ''; // Clear previous contents
+
+  if (gradeData[grade][subject][lesson]) {
+    const contents = gradeData[grade][subject][lesson];
+    contents.forEach(content => {
+      const button = document.createElement('button');
+      button.textContent = content.trim(); // Trim to remove extra spaces
+      contentsContainer.appendChild(button);
+    });
+  }
 }
 
 // Load the data on page load

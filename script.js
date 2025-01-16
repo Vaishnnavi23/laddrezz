@@ -40,7 +40,7 @@ function loadGradesAndSubjects() {
         gradeData[grade][subject] = contents.split(","); // Split contents by commas
         console.log("Grade Data  11111111111111111111111111:", JSON.stringify(gradeData, null, 2)); 
         const jsonData = JSON.stringify(gradeData, null, 2);
-         console.log("Grade Data  2222222222222:", jsonData); 
+         console.log("Grade Data  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:", jsonData); 
         if (jsonData[grade] && jsonData[grade][subject]) {
           console.log("VVVVVVVVVVVVVVVVVVVVVVV"); 
     return jsonData[grade][subject];
@@ -48,7 +48,7 @@ function loadGradesAndSubjects() {
             console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"); 
     return null; // Return null if grade or subject not found
   }
-        console.log("gradeData[grade][subject] : "+ gradeData[1]['English']);
+        console.log("gradeData[grade][subject] : "+ gradeData[grade][subject]);
         console.log("gradeData : "+ gradeData);
       });
 
@@ -102,8 +102,8 @@ function displayContents(subject, grade) {
    console.log("gradeData 2: "+ gradeData);
   console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
   const jsonData = JSON.stringify(gradeData, null, 2);
-         console.log("Grade Data  333333333333333333333:", jsonData); 
-  const contents = gradeData[1]['English'];
+         console.log("Grade Data  =================================:", jsonData); 
+  const contents = gradeData[grade][subject];
    console.log("contents : "+ contents);
   contents.forEach(content => {
     const button = document.createElement('button');

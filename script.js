@@ -73,7 +73,25 @@ function loadGradesAndSubjects() {
       console.error('Error reading Excel file:', error);
     });
 }
+function handleButtonClick(sectionContainer) {
+    // Add event listener to section container to delegate button clicks
+    sectionContainer.addEventListener('click', function (event) {
+      if (event.target.tagName === 'BUTTON') {
+        // Remove 'selected' class from all buttons in the section
+        Array.from(sectionContainer.getElementsByTagName('button')).forEach(function (button) {
+          button.classList.remove('selected');
+        });
 
+        // Add 'selected' class to clicked button
+        event.target.classList.add('selected');
+      }
+    });
+  }
+
+  // Initialize button click handling for each section
+  handleButtonClick(subjectsContainer);
+  handleButtonClick(lessonsContainer);
+  handleButtonClick(contentsContainer);
 // Function to display lessons for a subject as buttons
 function displayLessons(subject, grade) {
   const contentsContainer = document.getElementById('contentsContainer');

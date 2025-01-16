@@ -24,7 +24,6 @@ function loadGradesAndSubjects() {
       console.log('Parsed Excel data:', jsonData); // Debugging output
 
       // Process data to group subjects by grade and store corresponding contents
-     // const gradeData = {};
       jsonData.forEach(row => {
        
         const grade = row['Grade'];
@@ -38,17 +37,15 @@ function loadGradesAndSubjects() {
         console.log(' Sub :', subject);
         console.log(' contents :', contents);
         gradeData[grade][subject] = contents.split(","); // Split contents by commas
-        console.log("Grade Data  11111111111111111111111111:", JSON.stringify(gradeData, null, 2)); 
         const jsonData = JSON.stringify(gradeData, null, 2);
-         console.log("Grade Data  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:", jsonData); 
+        console.log("jsonData at fetch file:", jsonData); 
         if (jsonData[grade] && jsonData[grade][subject]) {
-          console.log("VVVVVVVVVVVVVVVVVVVVVVV"); 
     return jsonData[grade][subject];
   } else {
-            console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"); 
+       
     return null; // Return null if grade or subject not found
   }
-        console.log("gradeData[grade][subject] : "+ gradeData[grade][subject]);
+        console.log("gradeData[grade][subject] : "+ gradeData[1]['English']);
         console.log("gradeData : "+ gradeData);
       });
 
@@ -95,16 +92,10 @@ function loadGradesAndSubjects() {
 function displayContents(subject, grade) {
   const contentsContainer = document.getElementById('contentsContainer');
   contentsContainer.innerHTML = ''; // Clear previous contents
-  //console.log("gradeData 1: "+ gradeData[grade][subject]);
-//  const gradeData = {}; // Assuming the gradeData object is available
-  console.log("grade: "+ grade);
-  console.log("subject: "+ subject);
-   console.log("gradeData 2: "+ gradeData);
-  console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
   const jsonData = JSON.stringify(gradeData, null, 2);
-         console.log("Grade Data  =================================:", jsonData); 
-  const contents = gradeData[grade][subject];
-   console.log("contents : "+ contents);
+  console.log("jsonData : ", jsonData); 
+  const contents = gradeData[1][subject];
+  console.log("contents : "+ contents);
   contents.forEach(content => {
     const button = document.createElement('button');
     button.textContent = content.trim(); // Trim to remove extra spaces

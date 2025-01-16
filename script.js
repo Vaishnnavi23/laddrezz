@@ -110,6 +110,7 @@ function displayContents(subject, grade, lesson) {
     if (quiz) {
       const quizButton = document.createElement('button');
       quizButton.textContent = 'Quiz';
+      console.log("quiz : "+quiz);
       quizButton.onclick = () => window.open(quiz, '_blank'); // Open the quiz link in a new tab
       contentsContainer.appendChild(quizButton);
     }
@@ -117,6 +118,7 @@ function displayContents(subject, grade, lesson) {
     if (worksheet) {
       const worksheetButton = document.createElement('button');
       worksheetButton.textContent = 'Worksheet';
+      console.log("Worksheet  : "+quiz);
       worksheetButton.onclick = () => window.open(worksheet, '_blank'); // Open the worksheet PDF in a new tab
       contentsContainer.appendChild(worksheetButton);
     }

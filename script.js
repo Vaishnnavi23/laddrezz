@@ -118,7 +118,7 @@ function displayContents(subject, grade, lesson) {
     if (worksheet) {
       const worksheetButton = document.createElement('button');
       worksheetButton.textContent = 'Worksheet';
-      console.log("Worksheet  : "+quiz);
+      console.log("Worksheet  : "+worksheet);
       worksheetButton.onclick = () => window.open(worksheet, '_blank'); // Open the worksheet PDF in a new tab
       contentsContainer.appendChild(worksheetButton);
     }

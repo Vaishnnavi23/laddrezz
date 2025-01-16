@@ -28,13 +28,15 @@ function loadGradesAndSubjects() {
        
         const grade = row['Grade'];
         const subject = row['Subjects'];
+		const lesson = row['Lesson'];
         const contents = row['Con'];
 
         if (!gradeData[grade]) {
           gradeData[grade] = {};
         }
-         console.log(' Grade :', grade);
+        console.log(' Grade :', grade);
         console.log(' Sub :', subject);
+		console.log(' Lesson :', lesson);
         console.log(' contents :', contents);
         gradeData[grade][subject] = contents.split(","); // Split contents by commas
         const jsonData = JSON.stringify(gradeData, null, 2);
@@ -45,7 +47,8 @@ function loadGradesAndSubjects() {
        
     return null; // Return null if grade or subject not found
   }
-        console.log("gradeData[grade][subject] : "+ gradeData[1]['English']);
+        console.log("gradeData[grade][subject] : "+ gradeData[grade][subject]);
+		 console.log("gradeData[grade][subject][Lesson] : "+ gradeData[grade][subject][Lesson]);
         console.log("gradeData : "+ gradeData);
       });
 

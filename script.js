@@ -54,6 +54,9 @@ function loadGradesAndSubjects() {
         const selectedGrade = gradesDropdown.value;
         subjectsContainer.innerHTML = ''; // Clear previous subjects
         contentsContainer.innerHTML = ''; // Clear previous contents
+        if (lessonsContainer) {
+            lessonsContainer.innerHTML = ''; // Clear previous lessons
+          }
 
         if (selectedGrade && gradeData[selectedGrade]) {
           const subjects = Object.keys(gradeData[selectedGrade]);

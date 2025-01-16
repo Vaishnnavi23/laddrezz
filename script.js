@@ -25,11 +25,12 @@ function loadGradesAndSubjects() {
         const grade = row['Grade'];
         const subject = row['Subjects'];
         const lesson = row['Lesson'];
-        
+        console.log("grade :"+grade +"subject :"+subject +"lesson :"+lesson);
         // Dynamically add columns starting with 'Button_' as buttons
         const resources = Object.keys(row)
           .filter(column => column.startsWith('Button_'))
           .reduce((acc, key) => {
+            console.log("key: "+key);
             acc[key] = row[key];
             return acc;
           }, {});

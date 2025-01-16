@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grades and Subjects</title>
+  <title>Grades, Subjects, and Lessons</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
   <script src="script.js" defer></script>
   <style>
@@ -53,7 +53,7 @@
       box-shadow: 0 4px 8px rgba(0, 123, 255, 0.5);
     }
 
-    /* Subjects and Contents Buttons */
+    /* Buttons styling */
     .subjects-container, .contents-container {
       margin-top: 20px;
     }
@@ -102,18 +102,30 @@
 </head>
 <body>
   <div class="container">
-    <h1>Select Grade</h1>
+    <h1>Select Grade, Subject, and Lesson</h1>
+
+    <!-- Grades Dropdown -->
     <label for="gradesDropdown">Select Grade:</label>
     <select id="gradesDropdown" class="dropdown">
       <option value="">Loading...</option>
     </select>
 
+    <!-- Subjects will be displayed as buttons -->
     <div id="subjectsContainer" class="subjects-container">
-      <!-- Subjects will be displayed here as buttons -->
+      <!-- Subjects buttons will appear here -->
     </div>
 
+    <!-- Lessons Dropdown -->
+    <div style="margin-top: 20px;">
+      <label for="lessonsDropdown">Select Lesson:</label>
+      <select id="lessonsDropdown" class="dropdown">
+        <option value="">Select a Lesson</option>
+      </select>
+    </div>
+
+    <!-- Contents will be displayed as buttons -->
     <div id="contentsContainer" class="contents-container">
-      <!-- Contents buttons will be displayed here -->
+      <!-- Content buttons will appear here -->
     </div>
   </div>
 </body>

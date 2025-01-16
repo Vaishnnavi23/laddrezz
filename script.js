@@ -110,12 +110,14 @@ function displayContents(subject, grade, lesson) {
     if (quiz) {
       const quizButton = document.createElement('button');
       quizButton.textContent = 'Quiz';
+      quizButton.onclick = () => window.open(quiz, '_blank'); // Open the quiz link in a new tab
       contentsContainer.appendChild(quizButton);
     }
 
     if (worksheet) {
       const worksheetButton = document.createElement('button');
       worksheetButton.textContent = 'Worksheet';
+      worksheetButton.onclick = () => window.open(worksheet, '_blank'); // Open the worksheet PDF in a new tab
       contentsContainer.appendChild(worksheetButton);
     }
 
@@ -126,6 +128,7 @@ function displayContents(subject, grade, lesson) {
     }
   }
 }
+
 
 // Load the data on page load
 document.addEventListener('DOMContentLoaded', loadGradesAndSubjects);

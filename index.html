@@ -4,22 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grades and Subjects</title>
+  <link rel="stylesheet" href="styles.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
   <script src="script.js" defer></script>
 </head>
 <body>
-  <h1>Select Grade</h1>
-  <label for="gradesDropdown">Select Grade:</label>
-  <select id="gradesDropdown">
-    <option value="">Loading...</option>
-  </select>
+  <div class="container">
+    <h1>Select Grade</h1>
+    <label for="gradesDropdown">Select Grade:</label>
+    <select id="gradesDropdown" class="dropdown">
+      <option value="">Loading...</option>
+    </select>
 
-  <div id="subjectsContainer" style="margin-top: 20px; font-size: 18px; font-weight: bold;">
-    <!-- Subjects will be displayed here as buttons -->
-  </div>
+    <div id="subjectsContainer" class="subjects-container">
+      <!-- Subjects will be displayed here as buttons -->
+    </div>
 
-  <div id="contentsContainer" style="margin-top: 20px; font-size: 18px;">
-    <!-- Contents buttons will be displayed here -->
+    <div id="contentsContainer" class="contents-container">
+      <!-- Contents buttons will be displayed here -->
+    </div>
   </div>
 </body>
 </html>

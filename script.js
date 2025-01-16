@@ -80,27 +80,31 @@ function loadGradesAndSubjects() {
 }
 
 // Function to display lessons for a subject
+// Function to display lessons for a subject as buttons
 function displayLessons(subject, grade) {
-  const lessonsDropdown = document.getElementById('lessonsDropdown');
-  lessonsDropdown.innerHTML = '<option value="">Select a Lesson</option>'; // Clear previous lessons
   const contentsContainer = document.getElementById('contentsContainer');
   contentsContainer.innerHTML = ''; // Clear previous contents
+  const lessonsContainer = document.getElementById('lessonsContainer') || document.createElement('div'); // Ensure lessonsContainer exists
+
+  if (!lessonsContainer.id) {
+    lessonsContainer.id = 'lessonsContainer';
+    lessonsContainer.classList.add('lessons-container');
+    contentsContainer.parentNode.insertBefore(lessonsContainer, contentsContainer);
+  }
+
+  lessonsContainer.innerHTML = ''; // Clear previous lessons
 
   if (gradeData[grade][subject]) {
     const lessons = Object.keys(gradeData[grade][subject]);
     lessons.forEach(lesson => {
-      const option = document.createElement('option');
-      option.value = lesson;
-      option.textContent = lesson;
-      lessonsDropdown.appendChild(option);
-    });
-
-    lessonsDropdown.addEventListener('change', () => {
-      const selectedLesson = lessonsDropdown.value;
-      displayContents(subject, grade, selectedLesson);
+      const button = document.createElement('button');
+      button.textContent = lesson;
+      button.onclick = () => displayContents(subject, grade, lesson);
+      lessonsContainer.appendChild(button);
     });
   }
 }
+
 
 // Function to display contents for a lesson
 function displayContents(subject, grade, lesson) {

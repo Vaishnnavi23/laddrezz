@@ -10,32 +10,37 @@
     /* General styling */
     body {
       font-family: Arial, sans-serif;
-      background: #f0f8ff;
+      background: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fstock.adobe.com%2Fsearch%3Fk%3Deducation%2Bbackground&psig=AOvVaw2vGu8b5ca7PkNj9I-p3gLv&ust=1737090703525000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOjpmau9-YoDFQAAAAAdAAAAABAJ') no-repeat center center fixed;
+      background-size: cover;
       color: #333;
       margin: 0;
       padding: 0;
+      height: 100vh;
     }
 
     .container {
       max-width: 800px;
       margin: 50px auto;
       padding: 20px;
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.85);
       border-radius: 10px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
       text-align: center;
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       margin-bottom: 20px;
       color: #444;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     label {
       font-size: 1.2rem;
       margin-bottom: 10px;
       display: inline-block;
+      color: #444;
     }
 
     .dropdown {
@@ -45,6 +50,7 @@
       border-radius: 5px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
+      background-color: #fff;
     }
 
     .dropdown:focus {
@@ -56,6 +62,9 @@
     /* Buttons styling */
     .subjects-container, .lessons-container, .contents-container {
       margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     button {
@@ -69,21 +78,30 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
       cursor: pointer;
       transition: all 0.3s ease;
+      transform: perspective(500px) rotateX(0deg);
     }
 
     button:hover {
       background: linear-gradient(to bottom, #0056b3, #003d80);
-      transform: translateY(-2px);
+      transform: translateY(-5px) rotateX(-5deg);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     }
 
     button:active {
       background: linear-gradient(to bottom, #003d80, #002850);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      transform: translateY(2px);
+      transform: translateY(3px);
     }
 
     button:focus {
       outline: none;
+      box-shadow: 0 4px 8px rgba(0, 123, 255, 0.5);
+    }
+
+    button.selected {
+      background: #28a745;
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
     }
 
     /* Responsive Design */

@@ -6,18 +6,7 @@
   <title>Grades, Subjects, and Lessons</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
   <script src="script.js" defer></script>
-  <script>
-    function resetSelectedButtons(containerId) {
-      const buttons = document.querySelectorAll(`#${containerId} button`);
-      buttons.forEach(button => button.classList.remove('selected'));
-    }
-
-    // Function to display lessons based on the selected subject
-    function displayLessons(subject, clickedButton) {
-      // Reset selected button style in the subject container
-      resetSelectedButtons('subjectsContainer');
-  </script>
-   <style>  
+  
     /* General styling */
     body {
       font-family: Arial, sans-serif;
@@ -97,12 +86,18 @@
       transform: translateY(-5px) rotateX(-5deg);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     }
+    button.selected {
+    background: #28a745; /* Green background for selected buttons */
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+  }
 
-    button:active {
-      background: linear-gradient(to bottom, #003d80, #002850);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      transform: translateY(3px);
-    }
+   button:active {
+    background: linear-gradient(to bottom, #003d80, #002850);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(3px);
+  }
+
 
     button:focus {
       outline: none;

@@ -30,7 +30,7 @@ function loadGradesAndSubjects() {
         const resources = Object.keys(row)
           .filter(column => column.startsWith('Button_'))
           .reduce((acc, key) => {
-            console.log("key :"+key)
+           
             acc[key] = row[key];
             return acc;
           }, {});

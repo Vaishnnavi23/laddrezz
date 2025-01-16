@@ -118,40 +118,47 @@ function displayLessons(subject, grade) {
 }
 
 // Function to display available contents (Quiz, Worksheet, Flashcard) for a lesson
+// Function to display available contents (Quiz, Worksheet, Flashcard) for a lesson
 function displayContents(subject, grade, lesson) {
   const contentsContainer = document.getElementById('contentsContainer');
   contentsContainer.innerHTML = ''; // Clear previous contents
 
   if (gradeData[grade][subject][lesson]) {
     const { quiz, worksheet, flashcard } = gradeData[grade][subject][lesson];
-    const resourceAvailable=0;
+    
+    let resourcesAvailable = false; // Flag to check if any resource is available
+
     if (quiz) {
-      resourceAvailable=1;
       const quizButton = document.createElement('button');
       quizButton.textContent = 'Quiz';
-      console.log("quiz : "+quiz);
+      console.log("quiz : " + quiz);
       quizButton.onclick = () => window.open(quiz, '_blank'); // Open the quiz link in a new tab
       contentsContainer.appendChild(quizButton);
+      resourcesAvailable = true;
     }
 
     if (worksheet) {
-      resourceAvailable=1;
       const worksheetButton = document.createElement('button');
       worksheetButton.textContent = 'Worksheet';
-      console.log("Worksheet  : "+worksheet);
+      console.log("Worksheet  : " + worksheet);
       worksheetButton.onclick = () => window.open(worksheet, '_blank'); // Open the worksheet PDF in a new tab
       contentsContainer.appendChild(worksheetButton);
+      resourcesAvailable = true;
     }
 
     if (flashcard) {
-      resourceAvailable=1
       const flashcardButton = document.createElement('button');
       flashcardButton.textContent = 'Flashcard';
       contentsContainer.appendChild(flashcardButton);
+      resourcesAvailable = true;
     }
-    if (resourceAvailable !=1)
-    {
-      contentsContainer.innerHTML="No Recources Available At This Moment"
+
+    // If no resources are available, display a message
+    if (!resourcesAvailable) {
+      const noResourcesMessage = document.createElement('p');
+      noResourcesMessage.textContent = 'No Resource available at this moment';
+      contentsContainer.appendChild(noResourcesMessage);
+    }
   }
 }
 

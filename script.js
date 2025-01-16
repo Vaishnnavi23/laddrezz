@@ -149,6 +149,8 @@ function displayContents(subject, grade, lesson) {
     if (flashcard) {
       const flashcardButton = document.createElement('button');
       flashcardButton.textContent = 'Flashcard';
+      console.log("flashcard  : " + flashcard);
+      worksheetButton.onclick = () => window.open(flashcard, '_blank'); // Open the flashcard HTML in a new tab
       contentsContainer.appendChild(flashcardButton);
       resourcesAvailable = true;
     }

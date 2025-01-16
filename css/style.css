@@ -1,7 +1,7 @@
 /* General styling */
 body {
   font-family: Arial, sans-serif;
-  background: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fstock.adobe.com%2Fsearch%3Fk%3Deducation%2Bbackground&psig=AOvVaw2vGu8b5ca7PkNj9I-p3gLv&ust=1737090703525000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOjpmau9-YoDFQAAAAAdAAAAABAJ') no-repeat center center fixed;
+  background: url('/images/educationbackground.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #333;
   margin: 0;

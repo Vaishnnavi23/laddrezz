@@ -25,7 +25,9 @@ function loadGradesAndSubjects() {
         const grade = row['Grade'];
         const subject = row['Subjects'];
         const lesson = row['Lesson'];
-        const contents = row['Con'];
+        const quiz = row['Quiz'] || '';
+        const worksheet = row['Worksheet'] || '';
+        const flashcard = row['Flashcard'] || '';
 
         if (!gradeData[grade]) {
           gradeData[grade] = {};
@@ -35,7 +37,7 @@ function loadGradesAndSubjects() {
           gradeData[grade][subject] = {};
         }
 
-        gradeData[grade][subject][lesson] = contents.split(',');
+        gradeData[grade][subject][lesson] = { quiz, worksheet, flashcard };
       });
 
       // Populate the grades dropdown
@@ -94,18 +96,31 @@ function displayLessons(subject, grade) {
   }
 }
 
-// Function to display contents for a lesson
+// Function to display available contents (Quiz, Worksheet, Flashcard) for a lesson
 function displayContents(subject, grade, lesson) {
   const contentsContainer = document.getElementById('contentsContainer');
   contentsContainer.innerHTML = ''; // Clear previous contents
 
   if (gradeData[grade][subject][lesson]) {
-    const contents = gradeData[grade][subject][lesson];
-    contents.forEach(content => {
-      const button = document.createElement('button');
-      button.textContent = content.trim();
-      contentsContainer.appendChild(button);
-    });
+    const { quiz, worksheet, flashcard } = gradeData[grade][subject][lesson];
+
+    if (quiz) {
+      const quizButton = document.createElement('button');
+      quizButton.textContent = 'Quiz';
+      contentsContainer.appendChild(quizButton);
+    }
+
+    if (worksheet) {
+      const worksheetButton = document.createElement('button');
+      worksheetButton.textContent = 'Worksheet';
+      contentsContainer.appendChild(worksheetButton);
+    }
+
+    if (flashcard) {
+      const flashcardButton = document.createElement('button');
+      flashcardButton.textContent = 'Flashcard';
+      contentsContainer.appendChild(flashcardButton);
+    }
   }
 }
 

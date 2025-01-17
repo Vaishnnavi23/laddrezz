@@ -152,7 +152,7 @@ function displayContents(subject, grade, lesson) {
 
 
 
-          const urlWithParam = `${resourceLink}?file=${encodeURIComponent(filePath)}&subject=${encodeURIComponent(subject)}&grade=${encodeURIComponent(grade)}&lesson=${encodeURIComponent(lesson)}`;
+          const urlWithParam = `${resourceLink}?file=${encodeURIComponent(filePath)}`;
         
           resourceButton.onclick = () => window.open(urlWithParam, '_blank'); // Open the resource link in a new tab
           contentsContainer.appendChild(resourceButton);

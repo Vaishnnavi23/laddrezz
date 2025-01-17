@@ -145,15 +145,16 @@ function displayContents(subject, grade, lesson) {
         if (resourceLink) {
           const resourceButton = document.createElement('button');
           resourceButton.textContent = buttonText; // Set the button text
-          console.log('${resourceLink}?subject=${encodeURIComponent(subject)}&filePath=${encodeURIComponent(resources)}&grade=${encodeURIComponent(grade)}&lessonName=${encodeURIComponent(lesson)}');
+         // console.log('${resourceLink}?subject=${encodeURIComponent(subject)}&filePath=${encodeURIComponent(resources)}&grade=${encodeURIComponent(grade)}&lessonName=${encodeURIComponent(lesson)}');
 
 
 
 
 
 
-          const urlWithParam = '${resourceLink}?subject=${encodeURIComponent(subject)}';
+          const urlWithParam = '${resourceLink}?subject=${encodeURIComponent(subject)}&filePath=${encodeURIComponent(resources)}&grade=${encodeURIComponent(grade)}&lessonName=${encodeURIComponent(lesson)}';
           //urlWithParam = urlWithParam+'grade=${encodeURIComponent(subject)};
+          console.log("urlWithParam : "+urlWithParam);
           resourceButton.onclick = () => window.open(urlWithParam, '_blank'); // Open the resource link in a new tab
           contentsContainer.appendChild(resourceButton);
           resourcesAvailable = true;

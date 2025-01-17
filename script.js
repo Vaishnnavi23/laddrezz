@@ -145,7 +145,7 @@ function displayContents(subject, grade, lesson) {
         if (resourceLink) {
           const resourceButton = document.createElement('button');
           resourceButton.textContent = buttonText; // Set the button text
-          const urlWithParam = `${resourceLink}?file=${encodeURIComponent(subject)}`;
+          const urlWithParam = `${resourceLink}?subject=${encodeURIComponent(subject)}&grade=${encodeURIComponent(grade)}`;
           resourceButton.onclick = () => window.open(urlWithParam, '_blank'); // Open the resource link in a new tab
           contentsContainer.appendChild(resourceButton);
           resourcesAvailable = true;

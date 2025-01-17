@@ -24,9 +24,15 @@
                     // Process the first Excel file
                     const workbook1 = XLSX.read(data, { type: 'array' });
                     const sheet1 = workbook1.Sheets[workbook1.SheetNames[0]];
-
+					console.log("sheet1 :"+sheet1)
                     // Get the value of the column Button_Flashcard
-                    const buttonFlashcardColumn = XLSX.utils.sheet_to_json(sheet1, { header: 1 }).map(row => row[0]);
+                    //const buttonFlashcardColumn = XLSX.utils.sheet_to_json(sheet1, { header: 1 }).map(row => row[0]);
+
+                    // Assuming the second file name is in the first row and first column
+                    //const secondFileName = buttonFlashcardColumn[0]; // Modify if necessary
+
+                    // Now, fetch the second Excel file using the name from the first file
+                    const file2Url = '/ladderzz/Forest.xlsx';
 
                     // Assuming the second file name is in the first row and first column
                     const secondFileName = buttonFlashcardColumn[0]; // Modify if necessary

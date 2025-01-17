@@ -152,9 +152,8 @@ function displayContents(subject, grade, lesson) {
 
 
 
-          const urlWithParam = '${resourceLink}?subject=${encodeURIComponent(subject)}&filePath=${encodeURIComponent(resources)}&grade=${encodeURIComponent(grade)}&lessonName=${encodeURIComponent(lesson)}';
-          //urlWithParam = urlWithParam+'grade=${encodeURIComponent(subject)};
-          console.log("urlWithParam : "+urlWithParam);
+          const urlWithParam = `${resourceLink}?file=${encodeURIComponent(filePath)}&subject=${encodeURIComponent(subject)}&grade=${encodeURIComponent(grade)}&lesson=${encodeURIComponent(lesson)}`;
+        
           resourceButton.onclick = () => window.open(urlWithParam, '_blank'); // Open the resource link in a new tab
           contentsContainer.appendChild(resourceButton);
           resourcesAvailable = true;

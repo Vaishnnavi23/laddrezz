@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Forest Flashcards</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script> <!-- SheetJS Library -->
     <style>
         body {
             display: flex;
@@ -12,19 +11,11 @@
             margin: 0;
             padding: 20px;
             background: linear-gradient(to bottom, #56ab2f, #a8e063);
-            background-repeat: no-repeat; /* Prevent background repetition */
-            background-size: cover; /* Ensure the background covers the entire screen */
-            font-family: 'Arial', sans-serif;
-            background: url('https://4kwallpapers.com/images/walls/thumbs_3t/5696.jpg') no-repeat center center fixed;
+            background-repeat: no-repeat;
             background-size: cover;
+            font-family: 'Arial', sans-serif;
             color: #fff;
             height: 100%;
-        }
-
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
         }
 
         .container {
@@ -46,11 +37,11 @@
         .flashcard {
             position: relative;
             width: 100%;
-            max-width: 500px; /* Add a max-width to control the size */
+            max-width: 500px;
             height: 200px;
-            margin: 20px auto; /* Centers the flashcard horizontally */
+            margin: 20px auto;
             perspective: 1000px;
-            display: flex; /* Ensures it's centered */
+            display: flex;
             justify-content: center;
             align-items: center;
         }
@@ -130,63 +121,71 @@
             cursor: not-allowed;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Forest - Our Lifeline</h1>
         <p><h3>Grade: 7</h3><h3>Subject: Science</h3></p>
+        
         <div class="flashcard">
             <div class="flashcard-inner" id="flashcard-inner" onclick="toggleFlashcard()">
-                <div class="flashcard-front" id="flashcard-front">Loading question...</div>
-                <div class="flashcard-back" id="flashcard-back">Loading answer...</div>
+                <div class="flashcard-front" id="flashcard-front">Loading Question...</div>
+                <div class="flashcard-back" id="flashcard-back">Loading Answer...</div>
             </div>
         </div>
+        
         <div class="question-counter">
-            <span id="current-question">1</span> / <span id="total-questions">Loading...</span>
+            <span id="current-question">1</span> / <span id="total-questions">30</span>
         </div>
-
+        
         <div class="controls">
             <button id="prev" onclick="prevCard()" disabled>Prev</button>
             <button id="next" onclick="nextCard()">Next</button>
         </div>
+        
     </div>
 
     <script>
+        // Hardcoded path to Excel file
+        const excelFilePath = '/laddrezz/Forest.xlsx';
+
         let flashcards = [];
         let currentIndex = 0;
 
-        // Function to handle file upload
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const data = e.target.result;
-                const workbook = XLSX.read(data, { type: 'binary' });
-                const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                const json = XLSX.utils.sheet_to_json(sheet);
+        // Function to fetch and read the Excel file
+        function readExcel(filePath) {
+            fetch(filePath)
+                .then(response => response.arrayBuffer())
+                .then(data => {
+                    const workbook = XLSX.read(data, { type: "array" });
+                    const sheet = workbook.Sheets[workbook.SheetNames[0]]; // Assuming first sheet
+                    const jsonData = XLSX.utils.sheet_to_json(sheet);
 
-                // Store flashcards from Excel data
-                flashcards = json.map(row => ({
-                    question: row['Question'],
-                    answer: row['Answer']
-                }));
+                    // Map the JSON data to flashcards array
+                    flashcards = jsonData.map(item => ({
+                        question: item.Question, // Adjust this according to your Excel column names
+                        answer: item.Answer      // Adjust this according to your Excel column names
+                    }));
 
-                // Update total questions counter
-                document.getElementById('total-questions').innerText = flashcards.length;
-
-                // Update the first flashcard
-                updateFlashcard();
-            };
-            reader.readAsBinaryString(file);
+                    updateFlashcard();
+                    document.getElementById('total-questions').innerText = flashcards.length;
+                })
+                .catch(error => console.error("Error reading Excel file:", error));
         }
 
-        // Function to update flashcard content
+        // Function to update the flashcard
         function updateFlashcard() {
+            if (flashcards.length === 0) return;
+
             const question = flashcards[currentIndex].question;
             const answer = flashcards[currentIndex].answer;
+
             document.getElementById("flashcard-front").innerText = question;
             document.getElementById("flashcard-back").innerText = answer;
             document.getElementById("current-question").innerText = currentIndex + 1;
+
+            // Enable or disable prev and next buttons
             document.getElementById("prev").disabled = currentIndex === 0;
             document.getElementById("next").disabled = currentIndex === flashcards.length - 1;
 
@@ -194,11 +193,13 @@
             document.getElementById("flashcard-inner").classList.remove("is-flipped");
         }
 
+        // Toggle flashcard flip
         function toggleFlashcard() {
             const cardInner = document.getElementById("flashcard-inner");
             cardInner.classList.toggle("is-flipped");
         }
 
+        // Next card function
         function nextCard() {
             if (currentIndex < flashcards.length - 1) {
                 currentIndex++;
@@ -206,6 +207,7 @@
             }
         }
 
+        // Previous card function
         function prevCard() {
             if (currentIndex > 0) {
                 currentIndex--;
@@ -213,14 +215,8 @@
             }
         }
 
-        // Automatically load the file on page load (You can add an upload button as well)
-        document.addEventListener('DOMContentLoaded', () => {
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.accept = '.xlsx';
-            fileInput.addEventListener('change', handleFileUpload);
-            document.body.appendChild(fileInput);
-        });
+        // Load the flashcards from the Excel file
+        readExcel(excelFilePath);
     </script>
 </body>
 </html>

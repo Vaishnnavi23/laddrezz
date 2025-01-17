@@ -148,7 +148,7 @@
 
     <script>
         // Hardcoded path to Excel file
-        const excelFilePath = '/'+file;
+        const excelFilePath = '/';
         let flashcards = [];
         let currentIndex = 0;
 
@@ -162,11 +162,13 @@
     const subject = getQueryParam('subject'); // 'Science is fun' (if passed as 'Science%20is%20fun')
     const lesson = getQueryParam('lesson');
     const grade = getQueryParam('grade');
+    excelFilePath=excelFilePath + file;
 
     console.log('File:', file); // Output: /Forest.xlsx
     console.log('Subject:', subject); // Output: Science is fun
     console.log('Grade:', grade); // Output: Science is fun
     console.log('Lesson:', lesson); // Output: Science is fun
+    console.log('Excel File Path:', excelFilePath); // Output: Science is fun
         
 
         // Function to fetch and read the Excel file

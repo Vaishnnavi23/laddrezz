@@ -28,6 +28,30 @@
             <button id="next" onclick="nextCard()">Next</button>
         </div>
     </div>
+      <script>
+        // Array of background image paths
+        const imagePaths = [
+            '/flashcards/images/image1.jpg',
+            '/flashcards/images/image2.jpg',
+            '/flashcards/images/image3.jpg',
+            '/flashcards/images/image4.jpg',
+            '/flashcards/images/image5.jpg',
+        ];
+
+        let currentImageIndex = 0;
+
+        // Function to change the body's background image
+        function changeBackground() {
+            document.body.style.backgroundImage = `url('${imagePaths[currentImageIndex]}')`;
+            currentImageIndex = (currentImageIndex + 1) % imagePaths.length; // Loop back to the first image
+        }
+
+        // Start the background change interval
+        setInterval(changeBackground, 10000); // Change every 10 seconds
+
+        // Set the initial background
+        changeBackground();
+    </script>
     <script src="/js/flashCard.js"></script>
 </body>
 </html>

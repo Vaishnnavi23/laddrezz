@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forest Flashcards</title>
+    <link rel="stylesheet" type="text/css" href="css/flashCard.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Forest - Our Lifeline</h1>
+        <p>
+            <h3 id="grade">Grade: 7</h3>
+            <h3 id="subject">Subject: Science</h3>
+        </p>
+        
+        <div class="flashcard">
+            <div class="flashcard-inner" id="flashcard-inner" onclick="toggleFlashcard()">
+                <div class="flashcard-front" id="flashcard-front">Loading Question...</div>
+                <div class="flashcard-back" id="flashcard-back">Loading Answer...</div>
+            </div>
+        </div>
+        
+        <div class="question-counter">
+            <span id="current-question">1</span> / <span id="total-questions">30</span>
+        </div>
+        
+        <div class="controls">
+            <button id="prev" onclick="prevCard()" disabled>Prev</button>
+            <button id="next" onclick="nextCard()">Next</button>
+        </div>
+    </div>
+    <script src="js/flashCard.js"></script>
+</body>
+</html>

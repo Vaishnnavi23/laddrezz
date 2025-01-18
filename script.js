@@ -146,7 +146,7 @@ function displayContents(subject, grade, lesson) {
           const resourceButton = document.createElement('button');
           resourceButton.textContent = buttonText; // Set the button text
           console.log("resourceLink"+resourceLink);
-          if(resourceButton ! = 'Flashcard'){
+          if(resourceButton != 'Flashcard'){
             resourceButton.onclick = () => window.open(resourceLink, '_blank');
           }
           else{

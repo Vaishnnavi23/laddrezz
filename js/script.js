@@ -1,7 +1,7 @@
 let gradeData = {};
 
 function loadGradesAndSubjects() {
-  const filePath = './MasterFile.xlsx'; // Path to your Excel file
+  const filePath = 'xlsx//MasterFile.xlsx'; // Path to your Excel file
   const gradesDropdown = document.getElementById('gradesDropdown');
   const subjectsContainer = document.getElementById('subjectsContainer');
   const contentsContainer = document.getElementById('contentsContainer');

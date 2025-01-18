@@ -29,29 +29,39 @@
         </div>
     </div>
       <script>
-        // Array of background image paths
-        const imagePaths = [
+        const images = [
             '/flashcards/images/image1.jpeg',
             '/flashcards/images/image2.jpeg',
             '/flashcards/images/image3.jpeg',
             '/flashcards/images/image4.jpeg',
-            '/flashcards/images/image5.jpeg',
+            '/flashcards/images/image5.jpeg'
         ];
 
         let currentImageIndex = 0;
 
-        // Function to change the body's background image
-        function changeBackground() {
-            document.body.style.backgroundImage = `url('${imagePaths[currentImageIndex]}')`;
-            currentImageIndex = (currentImageIndex + 1) % imagePaths.length; // Loop back to the first image
+        function preloadImage(url) {
+            const img = new Image();
+            img.src = url;
+            return img;
         }
 
-        // Start the background change interval
-        setInterval(changeBackground, 10000); // Change every 10 seconds
+        function changeBackground() {
+            if (images.length === 0) return; // Exit if no images are available
 
-        // Set the initial background
+            // Preload the next image
+            const nextImageIndex = (currentImageIndex + 1) % images.length;
+            preloadImage(images[nextImageIndex]);
+
+            // Set the background to the current image
+            document.body.style.backgroundImage = `url('${images[currentImageIndex]}')`;
+
+            // Update the index for the next image
+            currentImageIndex = nextImageIndex;
+        }
+
+        // Start the background rotation
         changeBackground();
-    </script>
+        setInterval(changeBackground, 3000); // Change every 10 seconds
     <script src="/js/flashCard.js"></script>
 </body>
 </html>

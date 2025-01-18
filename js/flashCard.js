@@ -14,22 +14,25 @@ const lesson = getQueryParam('lesson');
 const grade = getQueryParam('grade');
 //excelFilePath = excelFilePath + file;
 
-console.log('File:', file); 
-console.log('Subject:', subject); 
-console.log('Grade:', grade); 
-console.log('Lesson:', lesson); 
+console.log('File:', file +' Subject:', subject +' Grade:', grade + ' Lesson:', lesson); 
+//console.log('Subject:', subject); 
+//console.log('Grade:', grade); 
+//console.log('Lesson:', lesson); 
 
-const parts = file.split('|');// file will contain the question and answer file name + background image to put
+const parts = file.split('|');// file will contain the question and answer file name + background image 
 
-// If the second value is empty or null, set a default value for the second part
+
 file = parts[0]; // The first part (before the pipe);
 excelFilePath = excelFilePath + file;
 console.log('Excel File Path:', excelFilePath); 
-const bgImage = (parts[1] && parts[1].trim() !== "") ? parts[1] : "/images/educationbackground.jpg"; // Default value if empty
+const defaultBgImage = "/images/educationbackground.jpg"
+const bgImage = (parts[1] && parts[1].trim() !== "") ? parts[1] : defaultBgImage; 
 console.log("Background Image: ", bgImage);
+console.log("Default BG Image: ", defaultBgImage);
 document.body.style.backgroundImage = `url('${bgImage}')`;
 
-
+//Function to set the title , grade and lesson name dynamically
+function setData() {
  if (title)  {
  document.getElementById('title').innerText = lesson;
 }
@@ -38,6 +41,25 @@ if (grade) {
 }
 if (subject) {
 document.getElementById('subject').innerText = `Subject: ${subject}`;
+}
+}
+
+// Function to check if the image exists
+function setBackgroundImage(imageUrl, fallbackImage) {
+    const img = new Image();
+    
+    img.onload = () => {
+        // If the image loads successfully, set it as the background
+        document.body.style.backgroundImage = `url('${bgImage}')`;
+    };
+    
+    img.onerror = () => {
+        // If the image fails to load, set the fallback image as the background
+        document.body.style.backgroundImage = `url('${defaultBgImage}')`;
+    };
+    
+    // Attempt to load the image
+    img.src = imageUrl;
 }
 
 // Function to fetch and read the Excel file
@@ -59,6 +81,8 @@ function readExcel(filePath) {
         })
         .catch(error => console.error("Error reading Excel file:", error));
 }
+
+
 
 // Function to update the flashcard
 function updateFlashcard() {
@@ -99,6 +123,6 @@ function prevCard() {
     }
 }
 
-
-// Load the flashcards from the Excel file
+setData();
 readExcel(excelFilePath);
+setBackgroundImage(bgImage, defaultBgImage);

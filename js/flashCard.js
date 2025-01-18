@@ -1,4 +1,3 @@
-// Hardcoded path to Excel file
 let excelFilePath = '';
 let flashcards = [];
 let currentIndex = 0;
@@ -8,7 +7,7 @@ function getQueryParam(param) {
     return decodeURIComponent(urlParams.get(param)); // Decodes the value
 }
 
-// Example usage
+
 let file = getQueryParam('file');    
 const subject = getQueryParam('subject'); 
 const lesson = getQueryParam('lesson');
@@ -19,23 +18,16 @@ console.log('File:', file);
 console.log('Subject:', subject); 
 console.log('Grade:', grade); 
 console.log('Lesson:', lesson); 
-console.log('Excel File Path::::::::::::', excelFilePath); 
 
-
-//const constantVariable = "images/flashcard/image1.jpeg|";  // Example where second value is empty
-
-// Split the string by the pipe symbol '|'
-const parts = file.split('|');
+const parts = file.split('|');// file will contain the question and answer file name + background image to put
 
 // If the second value is empty or null, set a default value for the second part
 file = parts[0]; // The first part (before the pipe);
 excelFilePath = excelFilePath + file;
+console.log('Excel File Path:', excelFilePath); 
 const bgImage = (parts[1] && parts[1].trim() !== "") ? parts[1] : "/images/educationbackground.jpg"; // Default value if empty
-
-// Log the values to verify
 console.log("Background Image: ", bgImage);
-//console.log("Second Image (or Default): ", secondImage);
- document.body.style.backgroundImage = `url('${bgImage}')`;
+document.body.style.backgroundImage = `url('${bgImage}')`;
 
 
  if (title)  {

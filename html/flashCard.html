@@ -28,41 +28,23 @@
             <button id="next" onclick="nextCard()">Next</button>
         </div>
     </div>
-      <script>
-        const images = [
-            '/flashcards/images/image1.jpeg',
-            '/flashcards/images/image2.jpeg',
-            '/flashcards/images/image3.jpeg',
-            '/flashcards/images/image4.jpeg',
-            '/flashcards/images/image5.jpeg'
-        ];
-
-        let currentImageIndex = 0;
-
-        function preloadImage(url) {
-            const img = new Image();
-            img.src = url;
-            return img;
-        }
-
-        function changeBackground() {
-            if (images.length === 0) return; // Exit if no images are available
-
-            // Preload the next image
-            const nextImageIndex = (currentImageIndex + 1) % images.length;
-            preloadImage(images[nextImageIndex]);
-
-            // Set the background to the current image
-            document.body.style.backgroundImage = `url('${images[currentImageIndex]}')`;
-
-            // Update the index for the next image
-            currentImageIndex = nextImageIndex;
-        }
-
-        // Start the background rotation
-        changeBackground();
-        setInterval(changeBackground, 10000); // Change every 10 seconds
-          </script>
+     <script>
+        // Fetch the background image from the config file
+        fetch('/JSON/flashCardBGImage.json')
+            .then(response => response.json())
+            .then(data => {
+                const backgroundImage = data.backgroundImage;
+                const defaultImage = data.defaultImage;
+                if (backgroundImage) {
+                    // Set the background image to the body
+                    document.body.style.backgroundImage = `url('${backgroundImage}')`;
+                } else {
+                    document.body.style.backgroundImage = `url('${defaultImage}')`;
+                   // console.error('No background image found in config.');
+                }
+            })
+            .catch(error => console.error('Error loading the config file:', error));
+    </script>
     <script src="/js/flashCard.js"></script>
 </body>
 </html>

@@ -90,5 +90,20 @@ function prevCard() {
     }
 }
 
+// Fetch the background image from the config file
+        fetch('/JSON/flashCardBGImage.json')
+            .then(response => response.json())
+            .then(data => {
+                const backgroundImage = data.backgroundImage;
+                const defaultImage = data.defaultImage;
+                if (backgroundImage) {
+                    // Set the background image to the body
+                    document.body.style.backgroundImage = `url('${backgroundImage}')`;
+                } else {
+                    document.body.style.backgroundImage = `url('${defaultImage}')`;
+                   // console.error('No background image found in config.');
+                }
+            })
+            .catch(error => console.error('Error loading the config file:', error));
 // Load the flashcards from the Excel file
 readExcel(excelFilePath);

@@ -125,8 +125,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>Forest - Our Lifeline</h1>
-        <p><h3>Grade: 7</h3><h3>Subject: Science</h3></p>
+       <h1 id="title"></h1>
+        <p>
+            <h3 id="grade"></h3>
+            <h3 id="subject"></h3>
+        </p>
         
         <div class="flashcard">
             <div class="flashcard-inner" id="flashcard-inner" onclick="toggleFlashcard()">
@@ -169,7 +172,19 @@
     console.log('Grade:', grade); 
     console.log('Lesson:', lesson); 
     console.log('Excel File Path::::::::::::', excelFilePath); 
-        
+
+          if (title) {
+            document.getElementById('title').innerText = title;
+        }
+        if (grade) {
+            document.getElementById('grade').innerText = `Grade: ${grade}`;
+        }
+        if (subject) {
+            document.getElementById('subject').innerText = `Subject: ${subject}`;
+        }
+         console.log('Title:', title);
+        console.log('Grade:', grade);
+        console.log('Subject:', subject);
 
         // Function to fetch and read the Excel file
         function readExcel(filePath) {

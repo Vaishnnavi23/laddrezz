@@ -1,5 +1,5 @@
 // Hardcoded path to Excel file
-let excelFilePath = '/';
+let excelFilePath = '';
 let flashcards = [];
 let currentIndex = 0;
 

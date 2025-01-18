@@ -21,6 +21,16 @@ console.log('Grade:', grade);
 console.log('Lesson:', lesson); 
 console.log('Excel File Path::::::::::::', excelFilePath); 
 
+ if (title)  {
+ document.getElementById('title').innerText = lesson;
+}
+if (grade) {
+ document.getElementById('grade').innerText = `Grade: ${grade}`;
+}
+if (subject) {
+document.getElementById('subject').innerText = `Subject: ${subject}`;
+}
+
 // Function to fetch and read the Excel file
 function readExcel(filePath) {
     fetch(filePath)

@@ -13,7 +13,7 @@ let file = getQueryParam('file');
 const subject = getQueryParam('subject'); 
 const lesson = getQueryParam('lesson');
 const grade = getQueryParam('grade');
-excelFilePath = excelFilePath + file;
+//excelFilePath = excelFilePath + file;
 
 console.log('File:', file); 
 console.log('Subject:', subject); 
@@ -28,7 +28,8 @@ console.log('Excel File Path::::::::::::', excelFilePath);
 const parts = file.split('|');
 
 // If the second value is empty or null, set a default value for the second part
-file = parts[0]; // The first part (before the pipe)
+file = parts[0]; // The first part (before the pipe);
+excelFilePath = excelFilePath + file;
 const bgImage = (parts[1] && parts[1].trim() !== "") ? parts[1] : "/images/educationbackground.jpg"; // Default value if empty
 
 // Log the values to verify

@@ -9,7 +9,7 @@ function getQueryParam(param) {
 }
 
 // Example usage
-const file = getQueryParam('file');    
+let file = getQueryParam('file');    
 const subject = getQueryParam('subject'); 
 const lesson = getQueryParam('lesson');
 const grade = getQueryParam('grade');
@@ -20,6 +20,22 @@ console.log('Subject:', subject);
 console.log('Grade:', grade); 
 console.log('Lesson:', lesson); 
 console.log('Excel File Path::::::::::::', excelFilePath); 
+
+
+//const constantVariable = "images/flashcard/image1.jpeg|";  // Example where second value is empty
+
+// Split the string by the pipe symbol '|'
+const parts = file.split('|');
+
+// If the second value is empty or null, set a default value for the second part
+file = parts[0]; // The first part (before the pipe)
+const bgImage = (parts[1] && parts[1].trim() !== "") ? parts[1] : "/images/educationbackground.jpg"; // Default value if empty
+
+// Log the values to verify
+console.log("Background Image: ", bgImage);
+//console.log("Second Image (or Default): ", secondImage);
+ document.body.style.backgroundImage = `url('${bgImage}')`;
+
 
  if (title)  {
  document.getElementById('title').innerText = lesson;
@@ -90,20 +106,6 @@ function prevCard() {
     }
 }
 
-// Fetch the background image from the config file
-        fetch('/JSON/flashCardBGImage.json')
-            .then(response => response.json())
-            .then(data => {
-                const backgroundImage = data.backgroundImage;
-                const defaultImage = data.defaultImage;
-                if (backgroundImage) {
-                    // Set the background image to the body
-                    document.body.style.backgroundImage = `url('${backgroundImage}')`;
-                } else {
-                    document.body.style.backgroundImage = `url('${defaultImage}')`;
-                   // console.error('No background image found in config.');
-                }
-            })
-            .catch(error => console.error('Error loading the config file:', error));
+
 // Load the flashcards from the Excel file
 readExcel(excelFilePath);

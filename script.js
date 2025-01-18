@@ -146,8 +146,13 @@ function displayContents(subject, grade, lesson) {
           const resourceButton = document.createElement('button');
           resourceButton.textContent = buttonText; // Set the button text
           console.log("resourceLink"+resourceLink);
+          if(resourceButton ! = 'Flashcard'){
+            resourceButton.onclick = () => window.open(resourceLink, '_blank');
+          }
+          else{
           const urlWithParam = `/html/flashCard.html?subject=${encodeURIComponent(subject)}&grade=${encodeURIComponent(grade)}&lesson=${encodeURIComponent(lesson)}&file=${encodeURIComponent(resourceLink)}`;
           resourceButton.onclick = () => window.open(urlWithParam, '_blank'); // Open the resource link in a new tab
+          }
           contentsContainer.appendChild(resourceButton);
           resourcesAvailable = true;
         }

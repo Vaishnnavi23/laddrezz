@@ -90,7 +90,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Generate Worksheet</h1>
+        <h1>Upload Excel and Preview PDF with Options</h1>
 
         <!-- Grade, Subject, Title Form -->
         <div class="form-group">
@@ -262,9 +262,9 @@ function generatePDFContent(shuffle, includeAnswerKey, grade, subject, title) {
 				}
 				
             const correctAnswer = row[1];
-			const shuffledMatchAnswers= 	shuffledMatchAnswers[index_match];
+			const ai= 	shuffledMatchAnswers[index_match];
             doc.text(`${index_match + 1}. ${question}`, 10, yOffset);
-            doc.text(`${shuffledMatchAnswers}`, 100, yOffset);
+            doc.text(`${ai}`, 100, yOffset);
             yOffset += 8;
 			index_match = index_match + 1;;
             if (yOffset > 270) {

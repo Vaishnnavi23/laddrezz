@@ -217,7 +217,17 @@ function generatePDFContent(shuffle, includeAnswerKey, grade, subject, title) {
 
     doc.setFontSize(12);
 	doc.setTextColor(0, 0, 0); // Black text for questions
-      
+       if ( question != null && type == 'openended') {
+		// doc.text(`${index_match + 1}. ${question}`, 10, yOffset);
+            doc.text(`____________________________________________________________`, 100, yOffset);
+		  doc.text(`____________________________________________________________`, 100, yOffset);
+            yOffset += 8;
+			index_match = index_match + 1;;
+            if (yOffset > 270) {
+                doc.addPage();
+                yOffset = 10; // Reset yOffset for the new page
+            }
+	 }
 
     if (type !== 'match' && question != null && type !== 'openended') {
             // Handle multiline question text
@@ -274,17 +284,7 @@ function generatePDFContent(shuffle, includeAnswerKey, grade, subject, title) {
         }
     });
 
-	 if ( question != null && type == 'openended') {
-		// doc.text(`${index_match + 1}. ${question}`, 10, yOffset);
-            doc.text(`____________________________________________________________`, 100, yOffset);
-		  doc.text(`____________________________________________________________`, 100, yOffset);
-            yOffset += 8;
-			index_match = index_match + 1;;
-            if (yOffset > 270) {
-                doc.addPage();
-                yOffset = 10; // Reset yOffset for the new page
-            }
-	 }
+	
    
 		if (includeAnswerKey) {
 			doc.addPage();

@@ -213,21 +213,45 @@ function generatePDFContent(shuffle, includeAnswerKey, grade, subject, title) {
     const choices = [row[1], row[2], row[3], row[4]]; // Collect all choices
     const answer = row[5];
     const type = row[6];
+	let numberOfLines = row[7];
+	
 	const maxWidth = 180; // Maximum width for the question text
 
     doc.setFontSize(12);
 	doc.setTextColor(0, 0, 0); // Black text for questions
-       if ( question != null && type == 'openended') {
+	console.log(type);
+	 if ( question != null && type == 'openended') {
 		// doc.text(`${index_match + 1}. ${question}`, 10, yOffset);
-            doc.text('____________________________________________________________', 100, yOffset);
-		  doc.text('____________________________________________________________', 100, yOffset);
-            yOffset += 8;
-			index_match = index_match + 1;;
+		const questionLines = doc.splitTextToSize(`${index + 1}. ${question}`, maxWidth);
+		
+		questionLines.forEach((line) => {
+        doc.text(line, 14, yOffset);
+       // yOffset += 7; // Adjust spacing for each line of the question
+            });
+			yOffset += 10;
+          /* const pageWidth = doc.internal.pageSize.getWidth(); // Get page width
+		   const line = "_".repeat(pageWidth / 2); // Adjust based on width*/
+		   
+		   const pageWidth = doc.internal.pageSize.getWidth(); // Get page width
+const leftPadding = 10; // Adjust this value to control left padding
+const lineWidth = pageWidth / 2 - leftPadding; // Adjusted line width
+const line = " ".repeat(leftPadding) + "_".repeat(lineWidth);
+
+
+		if(numberOfLines != null) {
+			for (let i = 0; i < numberOfLines; i++) {
+			console.log("numberOfLines : "+numberOfLines);
+			doc.text(line, 10, yOffset); // Position each line dynamically
+			yOffset += 7;
+		}
+		yOffset += 7;
             if (yOffset > 270) {
                 doc.addPage();
                 yOffset = 10; // Reset yOffset for the new page
             }
 	 }
+	 }
+      
 
     if (type !== 'match' && question != null && type !== 'openended') {
             // Handle multiline question text
@@ -284,14 +308,13 @@ function generatePDFContent(shuffle, includeAnswerKey, grade, subject, title) {
         }
     });
 
-	
    
 		if (includeAnswerKey) {
 			doc.addPage();
 			yOffset = 10; // Reset yOffset for the new page
 			doc.setFontSize(12); // Font size for the heading
 			doc.setTextColor(0, 0, 0); // Black color for text
-			doc.text("Answer Key:", 14, yOffset);
+			doc.text("Answer Key For "+ title, 14, yOffset);
 			yOffset += 10; // Add some spacing after the heading
 			let answerKeyLine = "";
 
@@ -300,7 +323,7 @@ function generatePDFContent(shuffle, includeAnswerKey, grade, subject, title) {
 			const answer = row[5];
 			const type = row[6];
 			const question = row[0];
-			if (type !== "match" && question != null) {
+			if (type !== "match" && question != null && answer!=null) {
 				answerKeyLine += `${index + 1}. ${answer}; `;//questions
 			}
 		});

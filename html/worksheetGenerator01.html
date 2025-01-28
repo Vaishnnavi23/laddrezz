@@ -217,8 +217,8 @@ function generatePDFContent(shuffle, includeAnswerKey, grade, subject, title) {
     const answer = row[5];
     const type = row[6];
 	let numberOfLines = row[7];
-	const imageurl = "/images/educationbackground.jpg";;
-		
+	//const imageurl = "/images/educationbackground.jpg";;
+		const imageurl ="https://letsenhance.io/static/a31ab775f44858f1d1b80ee51738f4f3/11499/EnhanceAfter.jpg";
 	
 	const maxWidth = 180; // Maximum width for the question text
 
@@ -414,7 +414,7 @@ const line = " ".repeat(leftPadding) + "_".repeat(lineWidth);
 }
 
 // Example usage (adjust the path based on where your image is located)
-previewImages("/images/educationbackground.jpg");  // Ensure this path is correct
+previewImages("https://letsenhance.io/static/a31ab775f44858f1d1b80ee51738f4f3/11499/EnhanceAfter.jpg");  // Ensure this path is correct
 
 
 // Convert Image URL to Base64

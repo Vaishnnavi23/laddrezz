@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel to PDF with Grade, Subject, Title, Shuffle and Answer Key</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff6347;
+            font-size: 2em;
+            margin-top: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #ffe4b5;
+            border-radius: 5px;
+        }
+
+        label {
+            font-size: 1.1em;
+            color: #ff4500;
+        }
+
+        input, select {
+            padding: 10px;
+            margin: 5px;
+            border: 2px solid #ff4500;
+            border-radius: 5px;
+            width: 250px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff6347;
+            color: #fff;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #ff4500;
+        }
+
+        iframe {
+            width: 100%;
+            height: 500px;
+            display: none;
+            margin-top: 20px;
+            border: 2px solid #ff6347;
+            border-radius: 5px;
+        }
+
+        .checkbox-label {
+            font-size: 1.1em;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .checkbox-label input {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Excel and Preview PDF with Options</h1>
+
+        <!-- Grade, Subject, Title Form -->
+        <div class="form-group">
+            <label for="grade">Grade:</label>
+            <select id="grade">
+                <option value="Grade 7">Grade 7</option>
+				
+                
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="subject">Subject:</label>
+            <select id="subject">
+                <option value="Math">Math</option>
+                <option value="Science">Science</option>
+                <option value="Social">Social</option>
+                <option value="English">English</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" placeholder="Enter title" />
+        </div>
+
+        <input type="file" id="fileInput" />
+        <br><br>
+        <button onclick="previewPDF()">Preview PDF</button>
+        <br><br>
+
+        <!-- Options to toggle shuffle and answer key -->
+        <div class="checkbox-label">
+            <input type="checkbox" id="shuffleQuestions" /> Shuffle Questions
+        </div>
+        <br>
+        <div class="checkbox-label">
+            <input type="checkbox" id="includeAnswerKey" /> Include Answer Key
+        </div>
+        <br><br>
+		
+
+        <!-- PDF Preview -->
+		 <div id="imagePreview" style="display: flex; flex-wrap: wrap;"></div>
+
+        <iframe id="pdfPreview"></iframe>
+    </div>
+
+    <script>
+        let excelData = [];
+			const grade = document.getElementById("grade").value;
+            const subject = document.getElementById("subject").value;
+            const title = document.getElementById("title").value;
+			document.getElementById("fileInput").addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: "array" });
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    excelData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+                    alert("Excel file loaded successfully!");
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        });
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+      
+
+function generatePDFContent(shuffle, includeAnswerKey, grade, subject, title) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    let yOffset = 10;
+
+    // Add header with grade, subject, and title
+    doc.setFontSize(16);
+    doc.setTextColor(255, 99, 71);
+    doc.text(`${grade} - ${subject}`, 14, yOffset);
+    yOffset += 5;
+    doc.setFontSize(16);
+	yOffset += 5;
+    doc.text(title, 14, yOffset);
+    yOffset += 10;
+
+    // Get data (excluding header)
+    let data = excelData.slice(1);// creates an array
+	const questions = [];
+    const correctAnswers = [];
+    const shuffledAnswers = [];
+    // Separate questions by type for match
+    let matchQuestions = data.filter(row => row[6] === 'match' && row[0] != null); // Type 'match'
+	   matchQuestions.forEach(row => {
+                questions.push(row[0]);
+                correctAnswers.push(row[1]);
+            });
+
+            // Shuffle the answers array
+         
+    const shuffledMatchAnswers = shuffleArray(correctAnswers.slice());// shuffling match answers to appear in worksheet
+	if (shuffle) { // when shuffle is selected 
+   
+	const nonMatchRows = data.filter(row => row[6] !== "match");
+    const matchRows = data.filter(row => row[6] === "match");
+    const shuffledNonMatchRows = shuffleArray(nonMatchRows);
+    // Combine shuffled non-match rows with match rows (keep match rows in original order)
+    data = [...shuffledNonMatchRows, ...matchRows];
+	
+}
+
+    // Process questions
+	let index_match =0;
+	data.forEach((row, index) => {
+    const question = row[0];
+    const choices = [row[1], row[2], row[3], row[4]]; // Collect all choices
+    const answer = row[5];
+    const type = row[6];
+	let numberOfLines = row[7];
+	const imageurl = row[8];
+	
+	const maxWidth = 180; // Maximum width for the question text
+
+    doc.setFontSize(12);
+	doc.setTextColor(0, 0, 0); // Black text for questions
+	console.log(type);
+	 if ( question != null && type == 'openended') {
+		// doc.text(`${index_match + 1}. ${question}`, 10, yOffset);
+		const questionLines = doc.splitTextToSize(`${index + 1}. ${question}`, maxWidth);
+		
+		questionLines.forEach((line) => {
+        doc.text(line, 14, yOffset);
+       // yOffset += 7; // Adjust spacing for each line of the question
+            });
+			yOffset += 10;
+			
+          /* const pageWidth = doc.internal.pageSize.getWidth(); // Get page width
+		   const line = "_".repeat(pageWidth / 2); // Adjust based on width*/
+		   
+		   const pageWidth = doc.internal.pageSize.getWidth(); // Get page width
+const leftPadding = 10; // Adjust this value to control left padding
+const lineWidth = pageWidth / 2 - leftPadding; // Adjusted line width
+const line = " ".repeat(leftPadding) + "_".repeat(lineWidth);
+
+
+
+		if(numberOfLines != null) {
+			for (let i = 0; i < numberOfLines; i++) {
+			console.log("numberOfLines : "+numberOfLines);
+			doc.text(line, 10, yOffset); // Position each line dynamically
+			yOffset += 7;
+		}
+		yOffset += 7;
+            if (yOffset > 270) {
+                doc.addPage();
+                yOffset = 10; // Reset yOffset for the new page
+            }
+	 }
+	 }
+      
+
+    if (type !== 'match' && question != null && type !== 'openended') {
+            // Handle multiline question text
+		const questionLines = doc.splitTextToSize(`${index + 1}. ${question}`, maxWidth);
+		questionLines.forEach((line) => {
+        doc.text(line, 14, yOffset);
+        yOffset += 7; // Adjust spacing for each line of the question
+            });
+			console.log("imageurl :"+imageurl);
+			if(imageurl != null)
+			{
+			
+			previewImages(imageurl);
+			}
+			
+
+            // Render choices	
+        choices.forEach((choice, i) => {
+                if (choice) {
+                    const choiceLabel = String.fromCharCode(97 + i); // 'a', 'b', 'c', 'd'
+					if (choice != 'undefined' && choice != null) {
+					{
+                    doc.text(`${choiceLabel}) ${choice}`, 18, yOffset);
+					yOffset += 5; 
+					}
+                    }
+                }
+				
+            });
+
+            yOffset += 7; // Additional spacing between questions
+            // Check if content exceeds the page height
+            if (yOffset > 270) {
+                doc.addPage();
+                yOffset = 10; // Reset yOffset for the new page
+            }
+        }
+
+        if (type === 'match' && question != null) {
+			
+			if( index_match == 0)
+				{
+			  doc.setFontSize(15);
+			  doc.setFont("helvetica", "bold");
+			  doc.text("Macth the Following", 18, yOffset);
+			  yOffset += 15;
+			  doc.setFontSize(12);
+			  doc.setFont("helvetica", "normal");
+				}
+				
+            const correctAnswer = row[1];
+			const ai= 	shuffledMatchAnswers[index_match];
+            doc.text(`${index_match + 1}. ${question}`, 10, yOffset);
+            doc.text(`${ai}`, 100, yOffset);
+            yOffset += 8;
+			index_match = index_match + 1;;
+            if (yOffset > 270) {
+                doc.addPage();
+                yOffset = 10; // Reset yOffset for the new page
+            }
+        }
+    });
+
+   
+		if (includeAnswerKey) {
+			doc.addPage();
+			yOffset = 10; // Reset yOffset for the new page
+			doc.setFontSize(12); // Font size for the heading
+			doc.setTextColor(0, 0, 0); // Black color for text
+			doc.text("Answer Key For "+ title, 14, yOffset);
+			yOffset += 10; // Add some spacing after the heading
+			let answerKeyLine = "";
+
+    
+		data.forEach((row, index) => {
+			const answer = row[5];
+			const type = row[6];
+			const question = row[0];
+			if (type !== "match" && question != null && answer!=null) {
+				answerKeyLine += `${index + 1}. ${answer}; `;//questions
+			}
+		});
+	
+	answerKeyLine += `\n`;
+	answerKeyLine += `\n`;
+	console.log("correctAnswers :"+correctAnswers);
+	if(correctAnswers !=null && correctAnswers.length !=0 ){
+	answerKeyLine += "Match the following answers";}
+	answerKeyLine += `\n`;
+	   correctAnswers.forEach((row, index) => {
+	   const question = questions[index];
+          answerKeyLine += `${index + 1}. ${question}\   :   ${row}\n`;
+        
+    });
+
+    doc.setFontSize(10); 
+    doc.text(answerKeyLine.trim(), 14, yOffset, { maxWidth: 180 });
+    yOffset += 10;
+
+    // Add a new page if the answer key exceeds the current page height
+    if (yOffset > 270) {
+        doc.addPage();
+        yOffset = 10;
+    }
+	}
+    return doc;
+}
+		function prviewLogic()
+		{
+			const shuffle = document.getElementById("shuffleQuestions").checked;
+            const includeAnswerKey = document.getElementById("includeAnswerKey").checked;
+            const grade = document.getElementById("grade").value;
+            const subject = document.getElementById("subject").value;
+            const title = document.getElementById("title").value;
+			const doc = generatePDFContent(shuffle, includeAnswerKey, grade, subject, title);
+            const pdfPreview = document.getElementById("pdfPreview");
+            const pdfDataUri = doc.output("datauristring");
+            pdfPreview.style.display = "block";
+            pdfPreview.src = pdfDataUri;
+		}
+
+
+        function previewPDF() {
+            if (excelData.length === 0) {
+                alert("Please upload an Excel file first!");
+                return;
+            }
+
+           prviewLogic();
+        }
+		
+		 // Function to update the preview dynamically based on the shuffle and answer key options
+		function updatePreview() {
+		
+            prviewLogic();
+        }
+		
+		async function previewImages("/images/educationbackgroup.jpg") {
+    const previewContainer = document.getElementById("imagePreview");
+    previewContainer.innerHTML = ""; // Clear previous images
+
+    if (imageUrl) {
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.style.width = "150px";
+        img.style.height = "150px";
+        img.style.margin = "10px";
+        img.onerror = () => img.replaceWith("Image not available"); // Handle broken links
+        previewContainer.appendChild(img);
+
+        // Convert Image to Base64
+        const imgBase64 = await getBase64FromUrl(imageUrl);
+
+        // Generate PDF
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.text("Image Preview", 10, 10); // Title
+        doc.addImage(imgBase64, "JPEG", 10, 20, 100, 100); // Add image
+
+       // doc.save("image.pdf"); // Download PDF
+    }
+}
+
+// Convert Image URL to Base64
+async function getBase64FromUrl(url) {
+    const proxyUrl = "https://cors-anywhere.herokuapp.com/"; // Public CORS proxy
+    try {
+        const response = await fetch(proxyUrl + url, { mode: "cors" });
+        if (!response.ok) throw new Error("Network response was not ok");
+        
+        const blob = await response.blob();
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
+        });
+    } catch (error) {
+        console.error("Failed to fetch image:", error);
+        return null;
+    }
+}
+
+        document.getElementById("shuffleQuestions").addEventListener("change", updatePreview);
+        document.getElementById("includeAnswerKey").addEventListener("change", updatePreview);
+    </script>
+</body>
+</html>

@@ -395,51 +395,29 @@ const line = " ".repeat(leftPadding) + "_".repeat(lineWidth);
             prviewLogic();
         }
 		
-		 function previewImages(imageurl) {
-    const previewContainer = document.getElementById("imagePreview");
-    previewContainer.innerHTML = ""; // Clear previous images
-		console.log("imageurl :"+imageurl);
-    if (imageUrl) {
-        const img = document.createElement("img");
-        img.src = imageUrl;
-        img.style.width = "150px";
-        img.style.height = "150px";
-        img.style.margin = "10px";
-        img.onerror = () => img.replaceWith("Image not available"); // Handle broken links
-        previewContainer.appendChild(img);
-
-        // Convert Image to Base64
-        const imgBase64 =  getBase64FromUrl(imageUrl);
-
-        // Generate PDF
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        doc.text("Image Preview", 10, 10); // Title
-        doc.addImage(imgBase64, "JPEG", 10, 20, 100, 100); // Add image
-
-       // doc.save("image.pdf"); // Download PDF
+		function previewImages(imageUrl) {
+    if (!imageUrl) {
+        console.error("No image URL provided.");
+        return;
     }
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF();
+
+    // Adding the image directly from URL
+    pdf.text("Image Preview", 10, 10);
+    pdf.addImage(imageUrl, 'JPEG', 10, 20, 100, 100); // Adjust the width, height, and position
+
+    // Save the PDF
+    pdf.save("image.pdf");
 }
+
+// Example usage (adjust the path based on where your image is located)
+previewImages("images/educationbackgroud.jpg");  // Ensure this path is correct
+
 
 // Convert Image URL to Base64
- function getBase64FromUrl(url) {
-    const proxyUrl = "https://cors-anywhere.herokuapp.com/"; // Public CORS proxy
-    try {
-        const response = await fetch(proxyUrl + url, { mode: "cors" });
-        if (!response.ok) throw new Error("Network response was not ok");
-        
-        const blob = await response.blob();
-        return new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.readAsDataURL(blob);
-        });
-    } catch (error) {
-        console.error("Failed to fetch image:", error);
-        return null;
-    }
-}
+
 
         document.getElementById("shuffleQuestions").addEventListener("change", updatePreview);
         document.getElementById("includeAnswerKey").addEventListener("change", updatePreview);

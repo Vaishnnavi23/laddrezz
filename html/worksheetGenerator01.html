@@ -217,7 +217,7 @@ function generatePDFContent(shuffle, includeAnswerKey, grade, subject, title) {
     const answer = row[5];
     const type = row[6];
 	let numberOfLines = row[7];
-	const imageurl = row[8];
+	const imageurl = "/images/educationbackgroup.jpg";;
 	
 	const maxWidth = 180; // Maximum width for the question text
 
@@ -395,10 +395,10 @@ const line = " ".repeat(leftPadding) + "_".repeat(lineWidth);
             prviewLogic();
         }
 		
-		 function previewImages("/images/educationbackgroup.jpg") {
+		 function previewImages(imageurl) {
     const previewContainer = document.getElementById("imagePreview");
     previewContainer.innerHTML = ""; // Clear previous images
-
+		console.log("imageurl :"+imageurl);
     if (imageUrl) {
         const img = document.createElement("img");
         img.src = imageUrl;

@@ -270,8 +270,9 @@ const line = " ".repeat(leftPadding) + "_".repeat(lineWidth);
 			console.log("imageurl :"+imageurl);
 			if(imageurl != null)
 			{
-			
-			previewImages(imageurl);
+			  doc.text("Image Preview", 10, 10);
+    doc.addImage(imageUrl, 'JPEG', 14,yOffset); // Adjust the width, height, and position
+			//previewImages(imageurl);
 			}
 			
 
@@ -410,7 +411,7 @@ const line = " ".repeat(leftPadding) + "_".repeat(lineWidth);
     pdf.addImage(imageUrl, 'JPEG', 10, 20, 100, 100); // Adjust the width, height, and position
 
     // Save the PDF
-    pdf.save("image.pdf");
+    //pdf.save("image.pdf");
 }
 
 // Example usage (adjust the path based on where your image is located)

@@ -270,8 +270,10 @@ const line = " ".repeat(leftPadding) + "_".repeat(lineWidth);
 			console.log("imageurl :"+imageurl);
 			if(imageurl != null)
 			{
-			  doc.text("Image Preview", 10, 10);
-    doc.addImage(imageurl, 'JPEG', 14,yOffset); // Adjust the width, height, and position
+				 doc.addImage(imageurl, 'JPEG', 14, yOffset, 100, 100);
+       				 yOffset += 110;
+			//  doc.text("Image Preview", 10, 10);
+    //pdf.addImage(imageUrl, 'JPEG', 10, 20, 100, 100);  // Adjust the width, height, and position
 			//previewImages(imageurl);
 			}
 			

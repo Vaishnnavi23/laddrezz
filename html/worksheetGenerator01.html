@@ -409,7 +409,7 @@ const line = " ".repeat(leftPadding) + "_".repeat(lineWidth);
         previewContainer.appendChild(img);
 
         // Convert Image to Base64
-        const imgBase64 = await getBase64FromUrl(imageUrl);
+        const imgBase64 =  getBase64FromUrl(imageUrl);
 
         // Generate PDF
         const { jsPDF } = window.jspdf;
@@ -423,7 +423,7 @@ const line = " ".repeat(leftPadding) + "_".repeat(lineWidth);
 }
 
 // Convert Image URL to Base64
-async function getBase64FromUrl(url) {
+ function getBase64FromUrl(url) {
     const proxyUrl = "https://cors-anywhere.herokuapp.com/"; // Public CORS proxy
     try {
         const response = await fetch(proxyUrl + url, { mode: "cors" });

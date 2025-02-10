@@ -1,131 +1,66 @@
-/* General Styling */
-body {
-  font-family: 'Poppins', Arial, sans-serif;
-  background: url('/images/educationbackground.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: #fff;
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  position: relative;
-}
-
-/* Main Content Box */
-.container {
-  max-width: 800px;
-  margin: 50px auto;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  transition: transform 0.3s ease-in-out;
-}
-
-.container:hover {
-  transform: scale(1.02);
-}
-
-/* Title Styling */
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: #222;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-/* Label Styling */
-label {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  display: inline-block;
-  color: #333;
-}
-
-/* Dropdown Styling */
-.dropdown {
-  padding: 12px;
-  font-size: 1rem;
-  border: 2px solid #007bff;
-  border-radius: 10px;
-  background-color: #ffffff;
-  color: #333;
-  transition: all 0.3s ease-in-out;
-}
-
-.dropdown:focus {
-  outline: none;
-  border-color: #0056b3;
-  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-}
-
-/* Buttons Styling */
+/* Buttons Styling - 3D, Interactive, and Modern */
 button {
-  padding: 12px 20px;
+  padding: 12px 22px;
   margin: 10px;
   font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
   color: #ffffff;
-  background: linear-gradient(to bottom, #007bff, #0056b3);
+  background: linear-gradient(145deg, #007bff, #0056b3);
   border: none;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   position: relative;
-  overflow: hidden;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3), 
+              -4px -4px 10px rgba(255, 255, 255, 0.2);
 }
 
-/* Button Hover Effect */
+/* Glowing Effect on Hover */
 button:hover {
-  background: linear-gradient(to bottom, #0056b3, #003d80);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+  background: linear-gradient(145deg, #0056b3, #004092);
+  transform: translateY(-4px);
+  box-shadow: 0px 0px 12px rgba(0, 123, 255, 0.6), 
+              0px 0px 24px rgba(0, 123, 255, 0.4);
 }
 
-/* Click Effect */
+/* Press Animation */
 button:active {
   transform: scale(0.95);
-  background: linear-gradient(to bottom, #003d80, #002850);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(145deg, #003d80, #002850);
+  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 /* Selected Button */
 button.selected {
-  background: #28a745;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 255, 123, 0.3);
+  background: linear-gradient(145deg, #28a745, #1e7e34);
+  box-shadow: 0px 0px 12px rgba(40, 167, 69, 0.6);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .container {
-    width: 90%;
-    padding: 15px;
-  }
+/* Neon Glow Effect for Special Buttons */
+.generate-btn {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: linear-gradient(145deg, #ff5722, #e64a19);
+  color: white;
+  text-transform: uppercase;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 0px 12px rgba(255, 87, 34, 0.6);
+}
 
-  button {
-    padding: 10px 15px;
-    font-size: 0.9rem;
-  }
+/* Neon Glow Hover Effect */
+.generate-btn:hover {
+  background: linear-gradient(145deg, #e64a19, #bf360c);
+  box-shadow: 0px 0px 16px rgba(255, 87, 34, 0.8), 
+              0px 0px 24px rgba(255, 87, 34, 0.6);
+  transform: translateY(-4px);
+}
 
-  .button-container {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-  }
-
-  .generate-btn {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  .generate-btn:hover {
-    background-color: #45a049;
-  }
+/* Press Animation */
+.generate-btn:active {
+  transform: scale(0.95);
+  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.3);
 }

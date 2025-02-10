@@ -1,4 +1,4 @@
-/* General styling */
+/* General Styling */
 body {
   font-family: 'Poppins', Arial, sans-serif;
   background: url('/images/educationbackground.jpg') no-repeat center center fixed;
@@ -11,7 +11,7 @@ body {
   overflow: hidden;
 }
 
-/* Background Overlay with Animation */
+/* Background Overlay (Without Blur) */
 body::before {
   content: "";
   position: absolute;
@@ -19,33 +19,33 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.6); /* Dark overlay for better readability */
   z-index: -1;
-  animation: fadeIn 2s ease-in-out;
 }
 
-/* Glassmorphism Effect */
+/* Main Content Box */
 .container {
   max-width: 800px;
   margin: 50px auto;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.95); /* Solid white background */
   border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   text-align: center;
-  animation: slideUp 1s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+}
+
+.container:hover {
+  transform: scale(1.02);
 }
 
 /* Title Styling */
 h1 {
   font-size: 2.5rem;
   margin-bottom: 20px;
-  color: #ffffff;
+  color: #222;
   text-transform: uppercase;
   letter-spacing: 2px;
-  text-shadow: 0 2px 5px rgba(255, 255, 255, 0.8);
 }
 
 /* Label Styling */
@@ -53,34 +53,33 @@ label {
   font-size: 1.2rem;
   margin-bottom: 10px;
   display: inline-block;
-  color: #ddd;
+  color: #333;
 }
 
 /* Dropdown Styling */
 .dropdown {
   padding: 12px;
   font-size: 1rem;
-  border: 2px solid #00d9ff;
+  border: 2px solid #007bff;
   border-radius: 10px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #fff;
+  background-color: #ffffff;
+  color: #333;
+  transition: all 0.3s ease-in-out;
 }
 
 .dropdown:focus {
   outline: none;
-  border-color: #00d9ff;
-  box-shadow: 0 4px 10px rgba(0, 217, 255, 0.5);
+  border-color: #0056b3;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
 }
 
-/* Button Styling */
+/* Buttons Styling */
 button {
   padding: 12px 20px;
   margin: 10px;
   font-size: 1rem;
   color: #ffffff;
-  background: linear-gradient(to bottom, #00d9ff, #0088cc);
+  background: linear-gradient(to bottom, #007bff, #0056b3);
   border: none;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -90,13 +89,7 @@ button {
   overflow: hidden;
 }
 
-button:hover {
-  background: linear-gradient(to bottom, #0088cc, #0056b3);
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 217, 255, 0.3);
-}
-
-/* Neon Glow Effect */
+/* Button Glow Effect */
 button::before {
   content: "";
   position: absolute;
@@ -110,15 +103,28 @@ button::before {
   transition: opacity 0.3s ease-in-out;
 }
 
+button:hover {
+  background: linear-gradient(to bottom, #0056b3, #003d80);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+}
+
 button:hover::before {
   opacity: 1;
-  filter: blur(10px);
+  filter: blur(5px);
+}
+
+/* Click Effect */
+button:active {
+  transform: scale(0.95);
+  background: linear-gradient(to bottom, #003d80, #002850);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Selected Button */
 button.selected {
   background: #28a745;
-  transform: translateY(-5px);
+  transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0, 255, 123, 0.3);
 }
 
@@ -156,18 +162,9 @@ button.selected {
 }
 
 /* Keyframe Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 @keyframes slideUp {
   from {
-    transform: translateY(50px);
+    transform: translateY(30px);
     opacity: 0;
   }
   to {
